@@ -109,7 +109,9 @@ const prefixes = {
 
     BJ: "+229",
 
-    CI: "+225"
+    CI: "+225",
+
+    TG: "+228"
 
 };
 
@@ -120,7 +122,9 @@ const countryNames = {
 
     BJ: "Bénin",
 
-    CI: "Côte d’Ivoire"
+    CI: "Côte d’Ivoire",
+
+    TG: "TOGO"
 
 };
 
@@ -181,6 +185,22 @@ const operatorsByCountry = {
             label: "Wave"
         }
     ]
+
+    
+        TG: [
+        {
+            value: "MTN",
+            label: "MTN"
+        },
+        {
+            value: "moov money",
+            label: "Moov Money"
+        },
+        {
+            value: "wave",
+            label: "Wave"
+        }
+    ],
 
 };
 
