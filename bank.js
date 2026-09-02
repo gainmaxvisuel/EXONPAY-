@@ -478,6 +478,10 @@ function findCountryCode(
         return "CI";
     }
 
+    if (dialCode === "+228") {
+        return "TG";
+    }
+
     return "";
 
 }
