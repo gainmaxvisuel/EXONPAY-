@@ -664,11 +664,1163 @@ body {
 ===================================================== -->
 
 <script>
-/*
-   La partie 2/2 du JavaScript
-   doit être placée ici.
-*/
-</script>
+
+/* =========================================================
+   CONFIGURATION SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://euyvppbbhjrjcbgmdian.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsIm5hbWUiOiJleG9ucGF5IiwicmVmIjoiZXV5dnBwYmJocnJjYmdtZGlhbiIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzg4MTIyMTY2LCJleHAiOjIxMDM2OTgxNjZ9.BOH9ZGx5I34wzIkl8oGU7_BZ8yN3zWZSqIrBceb6aH0";
+
+
+/* =========================================================
+   SESSION
+========================================================= */
+
+const savedUser =
+    localStorage.getItem("exonpay_user");
+
+if (!savedUser) {
+
+    window.location.replace("login.html");
+
+    throw new Error(
+        "Session utilisateur introuvable."
+    );
+}
+
+let sessionUser;
+
+try {
+
+    sessionUser =
+        JSON.parse(savedUser);
+
+} catch (error) {
+
+    localStorage.removeItem(
+        "exonpay_user"
+    );
+
+    window.location.replace(
+        "login.html"
+    );
+
+    throw new Error(
+        "Session utilisateur invalide."
+    );
+}
+
+
+/* =========================================================
+   VÉRIFICATION ID UTILISATEUR
+========================================================= */
+
+const userId =
+    sessionUser?.user_id;
+
+if (!userId) {
+
+    console.error(
+        "Session EXONPAY invalide : user_id absent.",
+        sessionUser
+    );
+
+    showLoadingError(
+        "Session utilisateur invalide. Veuillez vous reconnecter."
+    );
+
+    throw new Error(
+        "user_id absent de la session."
+    );
+}
+
+
+/* =========================================================
+   HEADERS SUPABASE
+========================================================= */
+
+function headers() {
+
+    return {
+
+        "apikey":
+            SUPABASE_ANON_KEY,
+
+        "Authorization":
+            "Bearer " +
+            SUPABASE_ANON_KEY,
+
+        "Content-Type":
+            "application/json",
+
+        "Accept":
+            "application/json",
+
+        "Prefer":
+            "return=representation"
+
+    };
+
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+function showMessage(text) {
+
+    const box =
+        document.getElementById("message");
+
+    if (!box) return;
+
+    box.textContent =
+        text;
+
+    box.style.display =
+        "block";
+
+    clearTimeout(
+        window.messageTimer
+    );
+
+    window.messageTimer =
+        setTimeout(() => {
+
+            box.style.display =
+                "none";
+
+        }, 4500);
+
+}
+
+
+/* =========================================================
+   ERREUR DE CHARGEMENT
+========================================================= */
+
+function showLoadingError(text) {
+
+    const loading =
+        document.getElementById("loading");
+
+    if (!loading) return;
+
+    loading.classList.add("error");
+
+    loading.textContent =
+        text;
+}
+
+
+/* =========================================================
+   FORMAT FCFA
+========================================================= */
+
+function money(value) {
+
+    const number =
+        Number(value || 0);
+
+    return number.toLocaleString(
+        "fr-FR",
+        {
+            maximumFractionDigits: 0
+        }
+    ) + " FCFA";
+
+}
+
+
+/* =========================================================
+   NOM DES CATÉGORIES
+========================================================= */
+
+function categoryName(type) {
+
+    const value =
+        String(type || "")
+        .trim()
+        .toLowerCase();
+
+    if (value === "simple") {
+
+        return "Produits simples";
+
+    }
+
+    if (value === "special") {
+
+        return "Produits spéciaux";
+
+    }
+
+    if (value === "opportunity") {
+
+        return "Opportunités";
+
+    }
+
+    if (!value) {
+
+        return "Autres produits";
+
+    }
+
+    return value
+        .charAt(0)
+        .toUpperCase()
+        + value.slice(1);
+
+}
+
+
+/* =========================================================
+   ID HTML CATÉGORIE
+========================================================= */
+
+function categoryId(type) {
+
+    const value =
+        String(type || "")
+        .trim()
+        .toLowerCase();
+
+    return value
+        .replace(/[^a-z0-9_-]/g, "-");
+
+}
+
+
+/* =========================================================
+   CRÉER UNE CARTE PRODUIT
+========================================================= */
+
+function createProductCard(
+    product,
+    imageNumber
+) {
+
+    const card =
+        document.createElement("article");
+
+    card.className =
+        "product-card";
+
+
+    /* =====================================================
+       IMAGE
+    ===================================================== */
+
+    const imageBox =
+        document.createElement("div");
+
+    imageBox.className =
+        "product-image";
+
+
+    const image =
+        document.createElement("img");
+
+    image.src =
+        "produit" +
+        imageNumber +
+        ".png";
+
+    image.alt =
+        product.name ||
+        "Produit";
+
+
+    image.onerror =
+        function() {
+
+            this.style.display =
+                "none";
+
+        };
+
+
+    imageBox.appendChild(
+        image
+    );
+
+
+    /* =====================================================
+       INFORMATIONS
+    ===================================================== */
+
+    const info =
+        document.createElement("div");
+
+    info.className =
+        "product-info";
+
+
+    /* NOM */
+
+    const name =
+        document.createElement("div");
+
+    name.className =
+        "product-name";
+
+    name.textContent =
+        product.name ||
+        "Produit";
+
+
+    /* PRIX */
+
+    const price =
+        document.createElement("div");
+
+    price.className =
+        "product-price";
+
+    price.textContent =
+        money(product.price);
+
+
+    /* REVENU JOURNALIER */
+
+    const daily =
+        document.createElement("div");
+
+    daily.className =
+        "product-row";
+
+    daily.innerHTML =
+        `
+        <span class="product-label">
+            Revenu journalier
+        </span>
+
+        <span class="product-value">
+            ${money(product.daily_income)}
+        </span>
+        `;
+
+
+    /* DURÉE */
+
+    const days =
+        document.createElement("div");
+
+    days.className =
+        "product-row";
+
+    days.innerHTML =
+        `
+        <span class="product-label">
+            Durée du cycle
+        </span>
+
+        <span class="product-value">
+            ${Number(product.cycle_days || 0)} jours
+        </span>
+        `;
+
+
+    /* REVENU TOTAL */
+
+    const total =
+        document.createElement("div");
+
+    total.className =
+        "product-row";
+
+    total.innerHTML =
+        `
+        <span class="product-label">
+            Revenu total
+        </span>
+
+        <span class="product-value">
+            ${money(product.total_income)}
+        </span>
+        `;
+
+
+    /* =====================================================
+       BOUTON
+    ===================================================== */
+
+    const buy =
+        document.createElement("button");
+
+    buy.className =
+        "buy-button";
+
+    buy.type =
+        "button";
+
+
+    /*
+       PRODUIT ACTIF
+    */
+
+    if (product.is_active === true) {
+
+        buy.textContent =
+            "Acheter";
+
+        buy.addEventListener(
+            "click",
+            function() {
+
+                buyProduct(
+                    product,
+                    buy
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+       PRODUIT INACTIF
+    */
+
+    else {
+
+        buy.textContent =
+            "🔒 Produit indisponible";
+
+        buy.disabled =
+            true;
+
+        buy.classList.add(
+            "locked-button"
+        );
+
+    }
+
+
+    /* =====================================================
+       ASSEMBLAGE
+    ===================================================== */
+
+    info.appendChild(name);
+
+    info.appendChild(price);
+
+    info.appendChild(daily);
+
+    info.appendChild(days);
+
+    info.appendChild(total);
+
+    info.appendChild(buy);
+
+    card.appendChild(imageBox);
+
+    card.appendChild(info);
+
+
+    return card;
+
+}
+
+
+/* =========================================================
+   DESCRIPTION DES CATÉGORIES
+========================================================= */
+
+function categoryDescription(type) {
+
+    const value =
+        String(type || "")
+        .trim()
+        .toLowerCase();
+
+    if (value === "simple") {
+
+        return "Découvrez les produits simples disponibles sur EXONPAY.";
+
+    }
+
+    if (value === "special") {
+
+        return "Découvrez les produits spéciaux proposés actuellement.";
+
+    }
+
+    if (value === "opportunity") {
+
+        return "Découvrez les opportunités disponibles sur EXONPAY.";
+
+    }
+
+    return "Découvrez les produits disponibles dans cette catégorie.";
+
+}
+
+
+/* =========================================================
+   NAVIGATION DES CATÉGORIES
+========================================================= */
+
+function createCategoryNavigation(
+    categoryList
+) {
+
+    const navigation =
+        document.getElementById(
+            "categories-navigation"
+        );
+
+    navigation.innerHTML =
+        "";
+
+
+    categoryList.forEach(
+        category => {
+
+            const button =
+                document.createElement("button");
+
+            button.type =
+                "button";
+
+            button.className =
+                "category-button";
+
+            button.dataset.category =
+                category;
+
+            button.textContent =
+                categoryName(category);
+
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    showCategory(
+                        category
+                    );
+
+                }
+            );
+
+
+            navigation.appendChild(
+                button
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   AFFICHER UNE CATÉGORIE
+========================================================= */
+
+function showCategory(
+    selectedCategory
+) {
+
+    const sections =
+        document.querySelectorAll(
+            ".section"
+        );
+
+    sections.forEach(
+        section => {
+
+            section.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    const selectedId =
+        "section-" +
+        categoryId(
+            selectedCategory
+        );
+
+
+    const selectedSection =
+        document.getElementById(
+            selectedId
+        );
+
+
+    if (selectedSection) {
+
+        selectedSection.classList.add(
+            "active"
+        );
+
+    }
+
+
+    /* Bouton actif */
+
+    const buttons =
+        document.querySelectorAll(
+            ".category-button"
+        );
+
+
+    buttons.forEach(
+        button => {
+
+            button.classList.toggle(
+                "active",
+                button.dataset.category ===
+                selectedCategory
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CRÉER UNE SECTION
+========================================================= */
+
+function createCategorySection(
+    category,
+    products
+) {
+
+    const section =
+        document.createElement("section");
+
+    section.className =
+        "section";
+
+    section.id =
+        "section-" +
+        categoryId(category);
+
+
+    /* TITRE */
+
+    const title =
+        document.createElement("div");
+
+    title.className =
+        "section-title";
+
+    title.textContent =
+        categoryName(category);
+
+
+    /* DESCRIPTION */
+
+    const description =
+        document.createElement("div");
+
+    description.className =
+        "section-description";
+
+    description.textContent =
+        categoryDescription(
+            category
+        );
+
+
+    /* LISTE */
+
+    const productList =
+        document.createElement("div");
+
+    productList.className =
+        "products";
+
+
+    /* CATÉGORIE VIDE */
+
+    if (!products.length) {
+
+        const empty =
+            document.createElement("div");
+
+        empty.className =
+            "empty-category";
+
+        empty.textContent =
+            "Aucun produit disponible dans cette catégorie pour le moment.";
+
+        productList.appendChild(
+            empty
+        );
+
+    }
+
+
+    /*
+       PRODUITS
+    */
+
+    products.forEach(
+        (product, index) => {
+
+            const card =
+                createProductCard(
+                    product,
+                    product._imageNumber
+                );
+
+            productList.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    section.appendChild(
+        title
+    );
+
+    section.appendChild(
+        description
+    );
+
+    section.appendChild(
+        productList
+    );
+
+
+    return section;
+
+}
+
+
+/* =========================================================
+   ORDRE DES CATÉGORIES
+========================================================= */
+
+function sortCategories(
+    categories
+) {
+
+    const preferredOrder = [
+
+        "simple",
+
+        "special",
+
+        "opportunity"
+
+    ];
+
+
+    return categories.sort(
+        function(a, b) {
+
+            const indexA =
+                preferredOrder.indexOf(a);
+
+            const indexB =
+                preferredOrder.indexOf(b);
+
+
+            if (
+                indexA !== -1 &&
+                indexB !== -1
+            ) {
+
+                return indexA - indexB;
+
+            }
+
+
+            if (indexA !== -1) {
+
+                return -1;
+
+            }
+
+
+            if (indexB !== -1) {
+
+                return 1;
+
+            }
+
+
+            return a.localeCompare(
+                b,
+                "fr"
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CHARGER LES PRODUITS
+========================================================= */
+
+async function loadProducts() {
+
+    const loading =
+        document.getElementById(
+            "loading"
+        );
+
+    const container =
+        document.getElementById(
+            "categories-container"
+        );
+
+
+    try {
+
+        loading.classList.remove(
+            "error"
+        );
+
+        loading.textContent =
+            "Chargement des produits...";
+
+
+        /*
+         * IMPORTANT :
+         * On filtre uniquement sur is_visible.
+         *
+         * is_active ne doit PAS être filtré ici,
+         * car un produit inactif doit rester visible
+         * avec le bouton verrouillé.
+         */
+
+        const url =
+            SUPABASE_URL +
+            "/rest/v1/products" +
+            "?select=id,name,product_type,price,daily_income,cycle_days,total_income,is_active,is_visible" +
+            "&is_visible=eq.true";
+
+
+        console.log(
+            "Chargement produits :",
+            url
+        );
+
+
+        const response =
+            await fetch(
+                url,
+                {
+                    method: "GET",
+                    headers: headers()
+                }
+            );
+
+
+        /*
+         * Vérification HTTP
+         */
+
+        if (!response.ok) {
+
+            const errorText =
+                await response.text();
+
+            console.error(
+                "Erreur Supabase :",
+                response.status,
+                errorText
+            );
+
+            throw new Error(
+                "Erreur Supabase " +
+                response.status +
+                " : " +
+                errorText
+            );
+
+        }
+
+
+        const products =
+            await response.json();
+
+
+        console.log(
+            "Produits reçus :",
+            products
+        );
+
+
+        if (!Array.isArray(products)) {
+
+            throw new Error(
+                "La réponse de Supabase n'est pas une liste de produits."
+            );
+
+        }
+
+
+        /*
+         * Nettoyage
+         */
+
+        container.innerHTML =
+            "";
+
+
+        /*
+         * Aucune donnée
+         */
+
+        if (!products.length) {
+
+            loading.textContent =
+                "Aucun produit visible actuellement.";
+
+            return;
+
+        }
+
+
+        /*
+         * Numéro d'image global.
+         *
+         * produit1.png
+         * produit2.png
+         * produit3.png
+         * etc.
+         */
+
+        products.forEach(
+            (product, index) => {
+
+                product._imageNumber =
+                    index + 1;
+
+            }
+        );
+
+
+        /*
+         * Récupération des catégories
+         */
+
+        const categorySet =
+            new Set();
+
+
+        products.forEach(
+            product => {
+
+                const type =
+                    String(
+                        product.product_type || ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                if (type) {
+
+                    categorySet.add(
+                        type
+                    );
+
+                }
+
+            }
+        );
+
+
+        /*
+         * Toujours afficher Opportunités
+         * même si aucun produit n'existe
+         * actuellement dans cette catégorie.
+         */
+
+        categorySet.add(
+            "opportunity"
+        );
+
+
+        const categoryList =
+            sortCategories(
+                Array.from(
+                    categorySet
+                )
+            );
+
+
+        /*
+         * Création des sections
+         */
+
+        categoryList.forEach(
+            category => {
+
+                const categoryProducts =
+                    products.filter(
+                        product => {
+
+                            return String(
+                                product.product_type || ""
+                            )
+                            .trim()
+                            .toLowerCase()
+                            === category;
+
+                        }
+                    );
+
+
+                const section =
+                    createCategorySection(
+                        category,
+                        categoryProducts
+                    );
+
+
+                container.appendChild(
+                    section
+                );
+
+            }
+        );
+
+
+        /*
+         * Création navigation
+         */
+
+        createCategoryNavigation(
+            categoryList
+        );
+
+
+        /*
+         * Première catégorie visible
+         *
+         * Pas de catégorie "Tous".
+         */
+
+        if (categoryList.length) {
+
+            showCategory(
+                categoryList[0]
+            );
+
+        }
+
+
+        /*
+         * Cacher le chargement
+         */
+
+        loading.style.display =
+            "none";
+
+
+    } catch (error) {
+
+        console.error(
+            "Erreur chargement produits :",
+            error
+        );
+
+
+        loading.style.display =
+            "block";
+
+
+        loading.classList.add(
+            "error"
+        );
+
+
+        loading.textContent =
+            "Impossible de charger les produits. " +
+            (
+                error?.message ||
+                "Erreur inconnue."
+            );
+
+    }
+
+}
+
+
+/* =========================================================
+   ACHETER UN PRODUIT
+========================================================= */
+
+async function buyProduct(
+    product,
+    button
+) {
+
+    /*
+     * Sécurité supplémentaire
+     */
+
+    if (
+        !product ||
+        product.is_active !== true
+    ) {
+
+        showMessage(
+            "Ce produit est actuellement indisponible."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Confirmation professionnelle
+     */
+
+    const confirmation =
+        "Confirmation d'achat\n\n" +
+
+        "Produit : " +
+        (product.name || "Produit") +
+        "\n" +
+
+        "Montant : " +
+        money(product.price) +
+        "\n" +
+
+        "Durée du cycle : " +
+        Number(
+            product.cycle_days || 0
+        ) +
+        " jours\n" +
+
+        "Revenu total : " +
+        money(product.total_income) +
+        "\n\n" +
+
+        "Le revenu total sera versé à la fin du cycle.\n\n" +
+
+        "Souhaitez-vous confirmer cet achat ?";
+
+
+    const confirmed =
+        window.confirm(
+     
 
 </body>
   </html>
