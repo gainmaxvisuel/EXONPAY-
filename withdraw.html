@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>EXONPAY — Retrait</title>
+<style>
+:root{
+  --dark:#111827;--muted:#6b7280;--border:#e5e7eb;
+  --green:#16a34a;--bg:#f7f8fa;--white:#fff;--danger:#dc2626;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--dark);font-family:Arial,sans-serif;padding-bottom:30px}
+.header{background:#fff;border-bottom:1px solid var(--border);padding:20px 16px 18px}
+.header-content{max-width:680px;margin:auto}
+.topline{display:flex;align-items:center;gap:12px}
+.back{width:42px;height:42px;border:1px solid var(--border);border-radius:12px;background:#fff;color:var(--dark);font-size:26px;line-height:1}
+.brand{display:flex;align-items:center;gap:9px;flex:1}
+.brand img{width:34px;height:34px;object-fit:contain}
+.brand-name{font-size:20px;font-weight:900;letter-spacing:.3px}
+.page-title{font-size:25px;font-weight:900;margin-top:18px}
+.page-subtitle{font-size:14px;color:var(--muted);margin-top:5px}
+.content{max-width:680px;margin:auto;padding:18px 16px 35px}
+.section{margin-top:20px}
+.section:first-child{margin-top:0}
+.section-title{margin-bottom:10px;font-size:16px;font-weight:800}
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px}
+.balance-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:20px}
+.balance-label{color:var(--muted);font-size:14px}
+.balance-value{font-size:30px;font-weight:900;margin-top:9px}
+.balance-value small{font-size:15px;color:var(--muted)}
+.minimum-row{display:flex;justify-content:space-between;margin-top:18px;font-size:14px}
+.minimum-row span{color:var(--muted)}
+.green{color:var(--green)}
+.form-label{display:block;color:var(--muted);font-size:14px;margin-bottom:8px}
+input{width:100%;padding:16px;border:1px solid var(--border);border-radius:13px;background:#fff;color:var(--dark);font-size:20px;outline:none}
+input:focus{border-color:#9ca3af}
+.fee-line{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:10px}
+.summary{border-top:1px solid var(--border);margin-top:16px;padding-top:5px}
+.summary .row{display:flex;justify-content:space-between;padding:11px 0;font-size:14px}
+.summary .row span{color:var(--muted)}
+.summary .receive{font-size:19px;font-weight:900}
+.account{border:1px solid var(--border);border-radius:14px;padding:16px}
+.status{float:right;color:var(--green);font-size:12px;font-weight:800}
+.account b{font-size:16px}
+.account .muted{color:var(--muted);font-size:14px;margin-top:7px}
+button{width:100%;padding:16px;border:0;border-radius:13px;background:var(--dark);color:#fff;font-size:16px;font-weight:800;cursor:pointer}
+button.secondary{background:#fff;color:var(--dark);border:1px solid var(--border)}
+button:disabled{opacity:.6}
+.note{margin-top:13px;color:var(--muted);font-size:13px;line-height:1.45}
+.hours{margin-top:14px;padding:13px;border-radius:13px;background:#f0fdf4;border:1px solid #dcfce7;color:#166534;font-size:13px}
+.history-item{padding:14px 0;border-bottom:1px solid var(--border);font-size:14px}.history-status{float:right;font-weight:800}.history-status.pending{color:#b45309}.history-status.approved{color:var(--green)}.history-status.rejected{color:var(--danger)}
+.history-item:last-child{border-bottom:0}
+.muted{color:var(--muted)}
+.empty{text-align:center;padding:8px 0;font-size:14px;line-height:1.45}
+.toast{position:fixed;left:50%;bottom:25px;transform:translateX(-50%);z-index:50;background:#111827;color:#fff;padding:13px 18px;border-radius:12px;text-align:center;max-width:90%;font-size:14px}
+.hidden{display:none}
+@media(max-width:500px){
+ .header{padding:16px 14px}
+ .content{padding:15px 14px 30px}
+ .balance-value{font-size:28px}
+ .card,.balance-card{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-content">
+    <div class="topline">
+      <button class="back" onclick="location.href='dashboard.html'" aria-label="Retour">‹</button>
+      <div class="brand">
+        <img src="logo.png" alt="EXONPAY">
+        <div class="brand-name">EXONPAY</div>
+      </div>
+    </div>
+    <div class="page-title">Retrait</div>
+    <div class="page-subtitle">Retirez vos gains en toute simplicité.</div>
+  </div>
+</header>
+
+<main class="content">
+
+  <section class="section">
+    <div class="section-title">Solde disponible</div>
+    <div class="balance-card">
+      <div class="balance-label">Solde disponible pour retrait</div>
+      <div id="balance" class="balance-value">Chargement...</div>
+      <div class="minimum-row">
+        <span>Minimum de retrait</span>
+        <b id="minimum">1 000 FCFA</b>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Montant du retrait</div>
+    <div class="card">
+      <div class="fee-line">
+        <span>Montant à retirer</span>
+        <b>Frais : <span id="feePct">10%</span></b>
+      </div>
+      <input id="amount" type="number" min="1000" step="1" placeholder="Ex. 5 000">
+      <div class="summary">
+        <div class="row"><span>Montant demandé</span><b id="requested">0 FCFA</b></div>
+        <div class="row"><span>Frais de retrait</span><b id="fee">0 FCFA</b></div>
+        <div class="row receive"><span>Vous recevez</span><b id="net" class="green">0 FCFA</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Compte de paiement</div>
+    <div class="card">
+      <div id="accountBox">Vérification du compte...</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Confirmation</div>
+    <div class="card">
+      <label class="form-label" for="password">Mot de passe de transaction</label>
+      <input id="password" type="password" placeholder="Entrez votre mot de passe de transaction">
+      <button id="withdrawBtn" style="margin-top:14px">Retirer maintenant</button>
+      <div class="note">Votre demande sera créée avec le statut <b>En attente</b> puis traitée par l'administration.</div>
+      <div class="hours">🕘 Retraits disponibles de <b>08:00 à 19:00</b>.</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Mes retraits <span style="float:right;color:var(--muted);font-size:13px;font-weight:400">Historique</span></div>
+    <div class="card">
+      <div id="history" class="muted">Chargement...</div>
+    </div>
+  </section>
+
+</main>
+
+<div id="toast" class="toast hidden"></div>
+
+<script>
+
+const SUPABASE_URL="https://euyvppbbhjrjcbgmdian.supabase.co";
+const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1eXZwcGJiaGpyamNiZ21kaWFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMjIxNjYsImV4cCI6MjEwMzY5ODE2Nn0.BOH9ZGx5I34wzIkl8oGU7_BZ8yN3zWZSqIrBceb6aH0";
+
+let session=null,wallet=0,feePct=10,minWithdrawal=1000,account=null;
+
+const $=id=>document.getElementById(id);
+const money=n=>Number(n||0).toLocaleString("fr-FR")+" FCFA";
+function toast(s){$("toast").textContent=s;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),3500)}
+function headers(){return {"apikey":SUPABASE_ANON_KEY,"Authorization":"Bearer "+SUPABASE_ANON_KEY,"Content-Type":"application/json"}}
+async function api(path,opt={}){let r=await fetch(SUPABASE_URL+path,{...opt,headers:{...headers(),...(opt.headers||{})}});let t=await r.text();let d=t?JSON.parse(t):null;if(!r.ok)throw new Error(d?.message||d?.error||t||("HTTP "+r.status));return d}
+
+async function loadSettings(){
+ const s=await api("/rest/v1/platform_settings?select=setting_key,setting_value&is_active=eq.true");
+ for(const x of s||[]){if(x.setting_key==="minimum_withdrawal")minWithdrawal=Number(x.setting_value)||1000;if(x.setting_key==="withdrawal_fee_percent")feePct=Number(x.setting_value)||10}
+ $("minimum").textContent=money(minWithdrawal);$("feePct").textContent=feePct+"%";
+ $("amount").min=minWithdrawal;
+}
+
+async function loadWallet(){
+ const rows=await api("/rest/v1/wallets?select=id,user_id,principal_balance,withdrawal_balance&user_id=eq."+encodeURIComponent(session.user_id)+"&limit=1");
+ if(!rows?.length) throw new Error("WALLET_NOT_FOUND");
+ wallet=Number(rows[0].withdrawal_balance||0);
+ $("balance").innerHTML=Number(wallet).toLocaleString("fr-FR")+" <small>FCFA</small>";
+}
+
+async function loadAccount(){
+ const rows=await api("/rest/v1/bank_accounts?select=id,user_id,recipient_name,operator,country_id,phone_number,is_active,created_at&user_id=eq."+encodeURIComponent(session.user_id)+"&is_active=eq.true&order=created_at.desc&limit=1");
+ if(!rows?.length){
+   $("accountBox").innerHTML="<div style='text-align:center;padding:10px 0'><div style='font-size:17px;margin-bottom:10px'>📱 Aucun compte de paiement enregistré.</div><div class='muted' style='margin-bottom:15px'>Enregistrez d’abord votre compte Mobile Money pour effectuer un retrait.</div><button class='secondary' onclick=\"location.href='bank.html'\">Enregistrer mon compte</button></div>";
+   account=null; return;
+ }
+ account=rows[0];
+ $("accountBox").innerHTML=`<div class="account"><span class="status">● ACTIF</span><b>${esc(account.recipient_name)}</b><div class="muted" style="margin-top:8px">${esc(account.operator)}</div><div style="margin-top:8px">+${esc(account.phone_number)}</div><button class="secondary" style="margin-top:15px" onclick="location.href='bank.html'">⚙ Gérer mon compte de retrait</button></div>`;
+}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+
+async function loadHistory(){
+ try{
+  const rows=await api("/rest/v1/withdrawals?select=id,requested_amount,fee_amount,net_amount,status,created_at&user_id=eq."+encodeURIComponent(session.user_id)+"&order=created_at.desc&limit=10");
+  if(!rows?.length){$("history").innerHTML="Aucun retrait pour le moment.";return}
+  const statusMap={
+   pending:{label:"En attente",cls:"pending"},
+   approved:{label:"Terminée",cls:"approved"},
+   completed:{label:"Terminée",cls:"approved"},
+   rejected:{label:"Rejetée",cls:"rejected"},
+   failed:{label:"Échouée",cls:"rejected"}
+  };
+  $("history").innerHTML=rows.map(x=>{
+    const st=statusMap[String(x.status||"").toLowerCase()]||{label:x.status||"Inconnu",cls:""};
+    return `<div class="history-item">
+      <b>${money(x.requested_amount)}</b>
+      <span class="history-status ${st.cls}">${st.label}</span>
+      <div class="muted">${new Date(x.created_at).toLocaleString("fr-FR")} · reçu ${money(x.net_amount)}</div>
+    </div>`;
+  }).join("");
+ }catch(e){console.error(e);$("history").innerHTML="Impossible de charger l’historique."; }
+}
+
+function update(){
+ const a=Number($("amount").value||0),f=Math.round(a*feePct/100),n=Math.max(0,a-f);
+ $("requested").textContent=money(a);$("fee").textContent=money(f);$("net").textContent=money(n);
+}
+
+$("amount").addEventListener("input",update);
+$("withdrawBtn").addEventListener("click",async()=>{
+ const a=Number($("amount").value||0),pw=$("password").value;
+ if(!account){toast("Enregistrez d’abord votre compte Mobile Money.");setTimeout(()=>location.href="bank.html",1200);return}
+ if(a<minWithdrawal){toast("Le retrait minimum est de "+money(minWithdrawal));return}
+ if(a>wallet){toast("Solde de retrait insuffisant.");return}
+ if(!pw){toast("Entrez votre mot de passe de transaction.");return}
+ try{
+  $("withdrawBtn").disabled=true;$("withdrawBtn").textContent="Traitement...";
+  await api("/rest/v1/rpc/request_withdrawal",{method:"POST",body:JSON.stringify({p_user_id:session.user_id,p_amount:a,p_transaction_password:pw})});
+  toast("Demande de retrait créée avec succès.");
+  $("amount").value="";$("password").value="";update();await Promise.allSettled([loadWallet(),loadHistory()]);
+ }catch(e){console.error(e);toast(e.message||"Impossible de créer le retrait.");}
+ finally{$("withdrawBtn").disabled=false;$("withdrawBtn").textContent="Retirer maintenant"}
+});
+
+(async()=>{
+ try{
+  const raw=localStorage.getItem("exonpay_user");if(!raw){location.href="login.html";return}
+  session=JSON.parse(raw);if(!session.user_id){throw new Error("SESSION_USER_ID_MISSING")}
+  await loadSettings();
+  const results=await Promise.allSettled([loadWallet(),loadAccount(),loadHistory()]);
+  const failed=results.filter(x=>x.status==="rejected");
+  if(failed.length){console.error("Erreurs chargement retrait:",failed.map(x=>x.reason));}
+  update();
+  if(results[0].status==="rejected")$("balance").innerHTML="<span style='font-size:20px;color:#ff8e8e'>Impossible de charger le solde</span>";
+ }catch(e){console.error(e);toast("Impossible de charger les informations du retrait.");}
+})();
+
+</script>
+</body>
+</html>
