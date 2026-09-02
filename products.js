@@ -6,7 +6,8 @@ const SUPABASE_URL =
 "https://euyvppbbhjrjcbgmdian.supabase.co";
 
 const SUPABASE_ANON_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJleHV5dnBwYmJocmpjYmdtZGlhbiIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzg4MTIyMTY2LCJleHAiOjIxMDM2OTgxNjZ9.BOH9ZGx5I34wzIkl8oGU7_BZ8yN3zWZSqIrBceb6aH0";
+"const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1eXZwcGJiaHpyamNiZ21kaWFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMjIxNjYsImV4cCI6MjEwMzY5ODE2Nn0.BOH9ZGx5I34wzIkl8oGU7_BZ8yN3zWZSqIrBceb6aH0";
 
 /* =========================================================
 SESSION
