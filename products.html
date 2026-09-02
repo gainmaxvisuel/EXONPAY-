@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EXONPAY - Produits</title>
+
+<style>
+:root{
+    --dark:#111827;
+    --black:#0b0f19;
+    --white:#ffffff;
+    --muted:#6b7280;
+    --border:#e5e7eb;
+    --bg:#f5f7fa;
+    --green:#16a34a;
+    --green-dark:#15803d;
+    --red:#dc2626;
+    --gray:#9ca3af;
+    --gold:#f59e0b;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background:var(--bg);
+    color:var(--dark);
+    padding-bottom:90px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    background:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,.08), transparent 28%),
+        radial-gradient(circle at 85% 80%, rgba(255,255,255,.06), transparent 30%),
+        var(--black);
+
+    color:white;
+    padding:18px 16px 22px;
+
+    position:relative;
+    overflow:hidden;
+}
+
+.header::before{
+    content:"EXONPAY";
+    position:absolute;
+    right:-35px;
+    top:15px;
+
+    font-size:65px;
+    font-weight:900;
+
+    color:rgba(255,255,255,.025);
+
+    transform:rotate(-12deg);
+    pointer-events:none;
+}
+
+.header-content{
+    max-width:900px;
+    margin:auto;
+    position:relative;
+    z-index:2;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.brand img{
+    width:38px;
+    height:38px;
+    object-fit:contain;
+    border-radius:10px;
+}
+
+.brand-name{
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:.5px;
+}
+
+.page-title{
+    margin-top:20px;
+    font-size:26px;
+    font-weight:900;
+}
+
+.page-subtitle{
+    margin-top:5px;
+    color:rgba(255,255,255,.7);
+    font-size:13px;
+}
+
+/* =========================
+   CONTENU
+========================= */
+
+.content{
+    width:min(900px, calc(100% - 28px));
+    margin:18px auto 0;
+}
+
+/* =========================
+   INFORMATION CYCLE
+========================= */
+
+.cycle-info{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+
+    padding:16px;
+
+    display:flex;
+    gap:13px;
+    align-items:flex-start;
+
+    box-shadow:0 5px 20px rgba(15,23,42,.04);
+}
+
+.cycle-icon{
+    width:42px;
+    height:42px;
+
+    flex:none;
+
+    border-radius:13px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#eef2ff;
+    color:#3730a3;
+
+    font-size:21px;
+}
+
+.cycle-title{
+    font-size:14px;
+    font-weight:900;
+}
+
+.cycle-text{
+    margin-top:5px;
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.55;
+}
+
+/* =========================
+   ONGLET CATEGORIES
+========================= */
+
+.category-tabs-wrapper{
+    position:sticky;
+    top:0;
+    z-index:50;
+
+    margin-top:16px;
+
+    padding:8px 0;
+
+    background:rgba(245,247,250,.94);
+    backdrop-filter:blur(12px);
+}
+
+.category-tabs{
+    display:flex;
+    gap:8px;
+
+    overflow-x:auto;
+    scrollbar-width:none;
+
+    padding-bottom:2px;
+}
+
+.category-tabs::-webkit-scrollbar{
+    display:none;
+}
+
+.category-tab{
+    flex:none;
+
+    border:1px solid var(--border);
+    background:white;
+
+    color:#6b7280;
+
+    padding:11px 15px;
+
+    border-radius:12px;
+
+    font-size:12px;
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.category-tab.active{
+    background:var(--dark);
+    color:white;
+    border-color:var(--dark);
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.product-section{
+    margin-top:22px;
+}
+
+.product-section.hidden{
+    display:none;
+}
+
+.section-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:12px;
+}
+
+.section-title{
+    font-size:19px;
+    font-weight:900;
+}
+
+.section-count{
+    font-size:11px;
+    font-weight:800;
+
+    padding:6px 9px;
+
+    border-radius:20px;
+
+    background:white;
+    border:1px solid var(--border);
+
+    color:var(--muted);
+}
+
+/* =========================
+   PRODUITS
+========================= */
+
+.products-list{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:13px;
+}
+
+/* =========================
+   PRODUCT CARD
+========================= */
+
+.product-card{
+    background:white;
+
+    border:1px solid var(--border);
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 5px 18px rgba(15,23,42,.04);
+
+    transition:
+        transform .2s,
+        box-shadow .2s;
+}
+
+.product-card:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 9px 25px rgba(15,23,42,.08);
+}
+
+.product-image{
+    width:100%;
+    height:150px;
+
+    object-fit:cover;
+
+    display:block;
+
+    background:#f3f4f6;
+}
+
+.product-body{
+    padding:15px;
+}
+
+.product-name{
+    font-size:16px;
+    font-weight:900;
+
+    line-height:1.3;
+}
+
+.product-status{
+    display:inline-flex;
+    align-items:center;
+
+    margin-top:7px;
+
+    padding:5px 8px;
+
+    border-radius:20px;
+
+    font-size:10px;
+    font-weight:900;
+}
+
+.status-active{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.status-locked{
+    background:#f3f4f6;
+    color:#6b7280;
+}
+
+.product-price{
+    margin-top:13px;
+
+    font-size:21px;
+    font-weight:900;
+}
+
+.currency{
+    font-size:11px;
+    color:var(--muted);
+    font-weight:800;
+}
+
+.product-details{
+    margin-top:14px;
+
+    border-top:1px solid #f0f1f3;
+    padding-top:11px;
+}
+
+.detail-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+
+    padding:5px 0;
+
+    font-size:12px;
+}
+
+.detail-label{
+    color:var(--muted);
+}
+
+.detail-value{
+    font-weight:800;
+    text-align:right;
+}
+
+.product-total{
+    margin-top:9px;
+
+    padding:11px;
+
+    background:#f8fafc;
+
+    border-radius:12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+}
+
+.product-total-label{
+    color:var(--muted);
+    font-size:11px;
+}
+
+.product-total-value{
+    font-size:14px;
+    font-weight:900;
+}
+
+/* =========================
+   BOUTONS
+========================= */
+
+.buy-button{
+    width:100%;
+
+    border:none;
+
+    margin-top:14px;
+
+    padding:13px;
+
+    border-radius:12px;
+
+    background:var(--dark);
+    color:white;
+
+    font-size:13px;
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.buy-button:hover{
+    background:#000;
+}
+
+.buy-button:active{
+    transform:scale(.98);
+}
+
+/* PRODUIT VERROUILLÉ */
+
+.buy-button.locked{
+    background:#e5e7eb;
+    color:#6b7280;
+
+    cursor:not-allowed;
+
+    opacity:1;
+}
+
+.buy-button.locked:hover{
+    background:#e5e7eb;
+}
+
+/* =========================
+   EMPTY / LOADING
+========================= */
+
+.loading,
+.empty-state{
+    background:white;
+
+    border:1px solid var(--border);
+    border-radius:18px;
+
+    padding:35px 20px;
+
+    text-align:center;
+
+    color:var(--muted);
+
+    font-size:13px;
+}
+
+.empty-icon{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.empty-title{
+    color:var(--dark);
+    font-size:16px;
+    font-weight:900;
+}
+
+.empty-text{
+    margin-top:6px;
+    line-height:1.5;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-overlay{
+    position:fixed;
+
+    inset:0;
+
+    z-index:200;
+
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+
+    background:rgba(0,0,0,.55);
+
+    padding:0;
+}
+
+.modal-overlay.show{
+    display:flex;
+}
+
+.modal{
+    width:min(520px,100%);
+
+    background:white;
+
+    border-radius:24px 24px 0 0;
+
+    padding:20px;
+
+    animation:modalIn .22s ease;
+}
+
+@keyframes modalIn{
+    from{
+        transform:translateY(100%);
+    }
+
+    to{
+        transform:translateY(0);
+    }
+}
+
+.modal-handle{
+    width:40px;
+    height:4px;
+
+    border-radius:10px;
+
+    background:#d1d5db;
+
+    margin:0 auto 18px;
+}
+
+.modal-title{
+    font-size:20px;
+    font-weight:900;
+}
+
+.modal-subtitle{
+    margin-top:5px;
+
+    color:var(--muted);
+
+    font-size:12px;
+}
+
+.modal-product{
+    margin-top:18px;
+
+    padding:15px;
+
+    background:#f8fafc;
+
+    border-radius:15px;
+}
+
+.modal-product-name{
+    font-size:15px;
+    font-weight:900;
+}
+
+.modal-row{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+
+    padding:9px 0;
+
+    border-bottom:1px solid #e5e7eb;
+
+    font-size:13px;
+}
+
+.modal-row:last-child{
+    border-bottom:none;
+}
+
+.modal-row span:first-child{
+    color:var(--muted);
+}
+
+.modal-row strong{
+    text-align:right;
+}
+
+.modal-notice{
+    margin-top:15px;
+
+    padding:13px;
+
+    background:#fff7ed;
+
+    border:1px solid #fed7aa;
+
+    border-radius:13px;
+
+    color:#9a3412;
+
+    font-size:12px;
+
+    line-height:1.55;
+}
+
+.modal-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:10px;
+
+    margin-top:17px;
+}
+
+.modal-button{
+    border:none;
+
+    padding:13px;
+
+    border-radius:12px;
+
+    font-size:13px;
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+.cancel-button{
+    background:#f3f4f6;
+    color:#374151;
+}
+
+.confirm-button{
+    background:var(--dark);
+    color:white;
+}
+
+.confirm-button:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+    margin-top:12px;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    font-size:12px;
+    font-weight:800;
+
+    display:none;
+}
+
+.message.show{
+    display:block;
+}
+
+.message.error{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.message.success{
+    background:#dcfce7;
+    color:#166534;
+}
+
+/* =========================
+   NAVIGATION BAS
+========================= */
+
+.bottom-nav{
+    position:fixed;
+
+    z-index:100;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    height:72px;
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+
+    background:rgba(255,255,255,.97);
+
+    border-top:1px solid var(--border);
+
+    backdrop-filter:blur(10px);
+}
+
+.nav-item{
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:6px;
+
+    color:#6b7280;
+
+    text-decoration:none;
+
+    font-size:11px;
+    font-weight:700;
+}
+
+.nav-item.active{
+    color:var(--dark);
+}
+
+.nav-icon{
+    width:20px;
+    height:20px;
+
+    border:1.8px solid currentColor;
+
+    border-radius:5px;
+}
+
+.nav-team,
+.nav-profile{
+    border-radius:50%;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:650px){
+
+    .products-list{
+        grid-template-columns:1fr;
+    }
+
+    .product-image{
+        height:180px;
+    }
+}
+
+@media(max-width:500px){
+
+    .content{
+        width:calc(100% - 22px);
+    }
+
+    .page-title{
+        font-size:23px;
+    }
+
+    .product-image{
+        height:165px;
+    }
+
+    .modal-actions{
+        grid-template-columns:1fr;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="header-content">
+
+        <div class="brand">
+
+            <img
+                src="logo.png"
+                alt="EXONPAY"
+            >
+
+            <div class="brand-name">
+                EXONPAY
+            </div>
+
+        </div>
+
+        <div class="page-title">
+            Nos produits
+        </div>
+
+        <div class="page-subtitle">
+            Découvrez les produits actuellement proposés sur EXONPAY.
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     CONTENU
+===================================================== -->
+
+<main class="content">
+
+    <!-- INFORMATION CYCLE -->
+
+    <div class="cycle-info">
+
+        <div class="cycle-icon">
+            ⏱
+        </div>
+
+        <div>
+
+            <div class="cycle-title">
+                Fonctionnement du cycle
+            </div>
+
+            <div class="cycle-text">
+                Chaque produit possède une durée de cycle définie.
+                Les revenus sont générés pendant le cycle selon les
+                conditions du produit. Le règlement prévu intervient
+                à la fin du cycle.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         ONGLETS
+    ================================================= -->
+
+    <div
+        id="categoryTabsWrapper"
+        class="category-tabs-wrapper"
+    >
+
+        <div
+            id="categoryTabs"
+            class="category-tabs"
+        ></div>
+
+    </div>
+
+
+    <!-- =================================================
+         SECTIONS
+    ================================================= -->
+
+    <section
+        id="section-simple"
+        class="product-section"
+    >
+
+        <div class="section-header">
+
+            <div class="section-title">
+                Produits simples
+            </div>
+
+            <div
+                id="count-simple"
+                class="section-count"
+            >
+                0 produit
+            </div>
+
+        </div>
+
+        <div
+            id="products-simple"
+            class="products-list"
+        ></div>
+
+    </section>
+
+
+    <section
+        id="section-special"
+        class="product-section"
+    >
+
+        <div class="section-header">
+
+            <div class="section-title">
+                Produits spéciaux
+            </div>
+
+            <div
+                id="count-special"
+                class="section-count"
+            >
+                0 produit
+            </div>
+
+        </div>
+
+        <div
+            id="products-special"
+            class="products-list"
+        ></div>
+
+    </section>
+
+
+    <section
+        id="section-opportunite"
+        class="product-section"
+    >
+
+        <div class="section-header">
+
+            <div class="section-title">
+                Opportunités
+            </div>
+
+            <div
+                id="count-opportunite"
+                class="section-count"
+            >
+                0 produit
+            </div>
+
+        </div>
+
+        <div
+            id="products-opportunite"
+            class="products-list"
+        ></div>
+
+    </section>
+
+
+    <!-- ETAT VIDE -->
+
+    <div
+        id="globalEmpty"
+        class="empty-state"
+        style="display:none;"
+    >
+
+        <div class="empty-icon">
+            📦
+        </div>
+
+        <div class="empty-title">
+            Aucun produit disponible
+        </div>
+
+        <div class="empty-text">
+            Aucun produit visible n'est actuellement disponible
+            dans les différentes catégories.
+        </div>
+
+    </div>
+
+
+    <!-- MESSAGE -->
+
+    <div
+        id="pageMessage"
+        class="message"
+    ></div>
+
+</main>
+
+
+<!-- =====================================================
+     MODAL ACHAT
+===================================================== -->
+
+<div
+    id="purchaseModal"
+    class="modal-overlay"
+>
+
+    <div class="modal">
+
+        <div class="modal-handle"></div>
+
+        <div class="modal-title">
+            Confirmer l'achat
+        </div>
+
+        <div class="modal-subtitle">
+            Vérifiez les informations du produit avant de confirmer.
+        </div>
+
+
+        <div class="modal-product">
+
+            <div
+                id="modalProductName"
+                class="modal-product-name"
+            >
+                --
+            </div>
+
+
+            <div class="modal-row">
+
+                <span>
+                    Montant d'achat
+                </span>
+
+                <strong>
+                    <span id="modalPrice">0</span>
+                    FCFA
+                </strong>
+
+            </div>
+
+
+            <div class="modal-row">
+
+                <span>
+                    Revenu quotidien
+                </span>
+
+                <strong>
+                    <span id="modalDaily">0</span>
+                    FCFA
+                </strong>
+
+            </div>
+
+
+            <div class="modal-row">
+
+                <span>
+                    Durée du cycle
+                </span>
+
+                <strong>
+                    <span id="modalDays">0</span>
+                    jours
+                </strong>
+
+            </div>
+
+
+            <div class="modal-row">
+
+                <span>
+                    Total du cycle
+                </span>
+
+                <strong>
+                    <span id="modalTotal">0</span>
+                    FCFA
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-notice">
+
+            <strong>Important :</strong>
+
+            Le paiement correspond à l'achat du produit.
+            Les revenus sont générés pendant le cycle selon
+            les conditions du produit et le règlement prévu
+            intervient à la fin du cycle.
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                id="cancelPurchase"
+                class="modal-button cancel-button"
+                type="button"
+            >
+                Annuler
+            </button>
+
+            <button
+                id="confirmPurchase"
+                class="modal-button confirm-button"
+                type="button"
+            >
+                Confirmer l'achat
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav class="bottom-nav">
+
+    <a
+        href="dashboard.html"
+        class="nav-item"
+    >
+        <span class="nav-icon"></span>
+        <span>Accueil</span>
+    </a>
+
+
+    <a
+        href="products.html"
+        class="nav-item active"
+    >
+        <span class="nav-icon"></span>
+        <span>Produit</span>
+    </a>
+
+
+    <a
+        href="team.html"
+        class="nav-item"
+    >
+        <span class="nav-icon nav-team"></span>
+        <span>Équipe</span>
+    </a>
+
+
+    <a
+        href="profile.html"
+        class="nav-item"
+    >
+        <span class="nav-icon nav-profile"></span>
+        <span>Profil</span>
+    </a>
+
+</nav>
+
+
+<script>
+
+/* =====================================================
+   CONFIGURATION SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+    "https://euyvppbbhjrjcbgmdian.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1eXZwcGJiaGpyamNiZ21kaWFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMjIxNjYsImV4cCI6MjEwMzY5ODE2Nn0.BOH9ZGx5I34wzIkl8oGU7_BZ8yN3zWZSqIrBceb6aH0";
+
+/*
+ IMPORTANT :
+ La clé ci-dessus doit être remplacée par la clé anon
+ exacte déjà utilisée dans votre projet EXONPAY si votre
+ fichier actuel possède une valeur différente.
+*/
+
+const sessionUser =
+    JSON.parse(
+        localStorage.getItem("exonpay_user") || "null"
+    );
+
+
+/* =====================================================
+   HEADERS
+===================================================== */
+
+function getHeaders(){
+
+    return {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization":
+            "Bearer " + SUPABASE_ANON_KEY,
+        "Content-Type":
+            "application/json"
+    };
+
+}
+
+
+/* =====================================================
+   FORMAT FCFA
+===================================================== */
+
+function formatFCFA(value){
+
+    return Number(value || 0)
+        .toLocaleString("fr-FR");
+
+}
+
+
+/* =====================================================
+   DETERMINER LA CATEGORIE
+===================================================== */
+
+function getSection(productType){
+
+    const type =
+        String(productType || "")
+        .toLowerCase()
+        .trim();
+
+    if(
+        type === "simple" ||
+        type === "produit" ||
+        type === "standard"
+    ){
+
+        return "simple";
+
+    }
+
+
+    if(
+        type === "special" ||
+        type === "spécial" ||
+        type === "speciale" ||
+        type === "spéciale"
+    ){
+
+        return "special";
+
+    }
+
+
+    if(
+        type === "opportunite" ||
+        type === "opportunité" ||
+        type === "opportunity" ||
+        type === "opportunites" ||
+        type === "opportunités"
+    ){
+
+        return "opportunite";
+
+    }
+
+
+    /*
+       Si une nouvelle vale
