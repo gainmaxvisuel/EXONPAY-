@@ -1,0 +1,678 @@
+<!DOCTYPE html><html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>EXONPAY - Mes produits</title><style>
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #f5f6f8;
+    --white: #ffffff;
+    --dark: #111827;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --success: #15803d;
+    --danger: #dc2626;
+    --warning: #b45309;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding-bottom: 82px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+.header {
+    background: var(--dark);
+    color: white;
+    padding: 22px 20px 34px;
+    border-radius: 0 0 28px 28px;
+}
+
+.header-content {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 25px;
+}
+
+.brand img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.brand-name {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: .5px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.page-subtitle {
+    margin-top: 7px;
+    color: rgba(255,255,255,.72);
+    font-size: 13px;
+}
+
+/* =========================
+   CONTENU
+   ========================= */
+
+.content {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 18px 30px;
+}
+
+/* =========================
+   RESUME
+   ========================= */
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.summary-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.summary-label {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.summary-value {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+/* =========================
+   SECTION
+   ========================= */
+
+.section-title {
+    margin-bottom: 11px;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+/* =========================
+   ETAT CHARGEMENT
+   ========================= */
+
+.loading {
+    padding: 35px 20px;
+    text-align: center;
+    color: var(--muted);
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+}
+
+/* =========================
+   ETAT VIDE
+   ========================= */
+
+.empty-state {
+    display: none;
+    padding: 35px 20px;
+    text-align: center;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+}
+
+.empty-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f3f4f6;
+    border-radius: 50%;
+
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.empty-title {
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.empty-description {
+    max-width: 420px;
+    margin: 8px auto 20px;
+
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.catalog-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+    padding: 0 20px;
+
+    border-radius: 11px;
+
+    background: var(--dark);
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* =========================
+   LISTE PRODUITS
+   ========================= */
+
+.products-list {
+    display: grid;
+    gap: 14px;
+}
+
+/* =========================
+   CARTE PRODUIT
+   ========================= */
+
+.product-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,.04);
+}
+
+.product-header {
+    padding: 17px;
+    border-bottom: 1px solid var(--border);
+}
+
+.product-header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.product-type {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.status {
+    flex-shrink: 0;
+
+    padding: 6px 9px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.status-active {
+    background: #dcfce7;
+    color: var(--success);
+}
+
+.status-completed {
+    background: #f3f4f6;
+    color: var(--muted);
+}
+
+.status-cancelled {
+    background: #fee2e2;
+    color: var(--danger);
+}
+
+.status-pending {
+    background: #fef3c7;
+    color: var(--warning);
+}
+
+/* =========================
+   INFORMATIONS
+   ========================= */
+
+.product-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.info-item {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.info-item:nth-child(odd) {
+    border-right: 1px solid var(--border);
+}
+
+.info-label {
+    margin-bottom: 5px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.info-value {
+    font-size: 14px;
+    font-weight: 800;
+    word-break: break-word;
+}
+
+/* =========================
+   DATES
+   ========================= */
+
+.product-dates {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.date-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+
+    font-size: 12px;
+}
+
+.date-row + .date-row {
+    margin-top: 8px;
+}
+
+.date-label {
+    color: var(--muted);
+}
+
+.date-value {
+    text-align: right;
+    font-weight: 700;
+}
+
+/* =========================
+   PROGRESSION
+   ========================= */
+
+.progress-section {
+    padding: 15px 16px;
+}
+
+.progress-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    margin-bottom: 8px;
+
+    font-size: 12px;
+}
+
+.progress-label {
+    color: var(--muted);
+}
+
+.progress-value {
+    font-weight: 800;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+
+    overflow: hidden;
+
+    background: #e5e7eb;
+    border-radius: 999px;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0;
+
+    background: var(--dark);
+    border-radius: 999px;
+
+    transition: width .3s ease;
+}
+
+/* =========================
+   ERREUR
+   ========================= */
+
+.error-state {
+    display: none;
+
+    padding: 20px;
+
+    background: white;
+    border: 1px solid #fecaca;
+    border-radius: 16px;
+
+    text-align: center;
+
+    color: var(--danger);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* =========================
+   NAVIGATION
+   ========================= */
+
+.bottom-nav {
+    position: fixed;
+    z-index: 100;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 72px;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    background: rgba(255,255,255,.97);
+    border-top: 1px solid var(--border);
+
+    backdrop-filter: blur(10px);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    color: #6b7280;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.nav-item.active {
+    color: var(--dark);
+}
+
+.nav-icon {
+    width: 20px;
+    height: 20px;
+
+    border: 1.8px solid currentColor;
+    border-radius: 5px;
+}
+
+.nav-team,
+.nav-profile {
+    border-radius: 50%;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 600px) {
+
+    .summary {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .summary-card:last-child {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 430px) {
+
+    .product-info {
+        grid-template-columns: 1fr;
+    }
+
+    .info-item:nth-child(odd) {
+        border-right: 0;
+    }
+
+    .product-header-top {
+        flex-direction: column;
+    }
+
+    .status {
+        align-self: flex-start;
+    }
+}
+
+@media (max-width: 360px) {
+
+    .summary-value {
+        font-size: 17px;
+    }
+}
+</style></head><body><header class="header"><div class="header-content">
+
+    <div class="brand">
+
+        <img
+            src="logo.png"
+            alt="EXONPAY"
+        >
+
+        <div class="brand-name">
+            EXONPAY
+        </div>
+
+    </div>
+
+    <div class="page-title">
+        Mes produits
+    </div>
+
+    <div class="page-subtitle">
+        Retrouvez ici les produits que vous possédez.
+    </div>
+
+</div>
+
+</header><main class="content"><!-- RESUME -->
+
+<section class="summary">
+
+    <div class="summary-card">
+
+        <div class="summary-label">
+            Produits
+        </div>
+
+        <div
+            id="totalProducts"
+            class="summary-value"
+        >
+            0
+        </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="summary-label">
+            Produits actifs
+        </div>
+
+        <div
+            id="activeProducts"
+            class="summary-value"
+        >
+            0
+        </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="summary-label">
+            Revenus générés
+        </div>
+
+        <div
+            id="generatedTotal"
+            class="summary-value"
+        >
+            0 FCFA
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- TITRE -->
+
+<div class="section-title">
+    Mes produits
+</div>
+
+
+<!-- CHARGEMENT -->
+
+<div
+    id="loading"
+    class="loading"
+>
+    Chargement de vos produits...
+</div>
+
+
+<!-- ERREUR -->
+
+<div
+    id="errorState"
+    class="error-state"
+>
+    Impossible de charger vos produits.
+</div>
+
+
+<!-- VIDE -->
+
+<div
+    id="emptyState"
+    class="empty-state"
+>
+
+    <div class="empty-icon">
+        +
+    </div>
+
+    <div class="empty-title">
+        Aucun produit
+    </div>
+
+    <div class="empty-description">
+        Vous ne possédez actuellement aucun produit EXONPAY.
+    </div>
+
+    <a
+        href="products.html"
+        class="catalog-button"
+    >
+        Voir les produits disponibles
+    </a>
+
+</div>
+
+
+<!-- LISTE -->
+
+<div
+    id="productsList"
+    class="products-list"
+></div>
+
+</main><nav class="bottom-nav"><a
+    href="dashboard.html"
+    class="nav-item"
+>
+    <span class="nav-icon"></span>
+    <span>Accueil</span>
+</a>
+
+
+<a
+    href="products.html"
+    class="nav-item active"
+>
+    <span class="nav-icon"></span>
+    <span>Produit</span>
+</a>
+
+
+<a
+    href="team.html"
+    class="nav-item"
+>
+    <span class="nav-icon nav-team"></span>
+    <span>Équipe</span>
+</a>
+
+
+<a
+    href="profile.html"
+    class="nav-item"
+>
+    <span class="nav-icon nav-profile"></span>
+    <span>Profil</span>
+</a>
+
+</nav><script src="my-products.js"></script></body>
+</html>

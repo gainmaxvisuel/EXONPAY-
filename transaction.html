@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EXONPAY - Transactions</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #f5f6f8;
+    --white: #ffffff;
+    --dark: #111827;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --success: #15803d;
+    --danger: #dc2626;
+    --warning: #b45309;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding-bottom: 82px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+.header {
+    background: var(--dark);
+    color: white;
+    padding: 22px 20px 34px;
+    border-radius: 0 0 26px 26px;
+}
+
+.header-content {
+    max-width: 900px;
+    margin: auto;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 24px;
+}
+
+.brand img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.brand-name {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.page-title {
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.page-subtitle {
+    margin-top: 7px;
+    color: rgba(255,255,255,.72);
+    font-size: 13px;
+}
+
+/* =========================
+   CONTENU
+   ========================= */
+
+.content {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 18px 30px;
+}
+
+/* =========================
+   IDENTIFIANT
+   ========================= */
+
+.professional-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 18px;
+}
+
+.professional-label {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 7px;
+}
+
+.professional-id {
+    font-size: 21px;
+    font-weight: 800;
+    word-break: break-word;
+}
+
+/* =========================
+   FILTRES
+   ========================= */
+
+.filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.filter {
+    width: 100%;
+    height: 46px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    background: white;
+    padding: 0 12px;
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+}
+
+.filter:focus {
+    border-color: var(--dark);
+    box-shadow: 0 0 0 3px rgba(17,24,39,.08);
+}
+
+/* =========================
+   TITRE
+   ========================= */
+
+.section-title {
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 11px;
+}
+
+/* =========================
+   LISTE
+   ========================= */
+
+.transactions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.transaction-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.transaction-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.transaction-title {
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.transaction-date {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.transaction-amount {
+    white-space: nowrap;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.transaction-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 13px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+}
+
+.transaction-id {
+    color: var(--muted);
+    font-size: 11px;
+    word-break: break-all;
+}
+
+.status {
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.status-success {
+    color: var(--success);
+    background: #dcfce7;
+}
+
+.status-pending {
+    color: var(--warning);
+    background: #fef3c7;
+}
+
+.status-failed {
+    color: var(--danger);
+    background: #fee2e2;
+}
+
+.status-other {
+    color: var(--muted);
+    background: #f3f4f6;
+}
+
+/* =========================
+   ETAT VIDE
+   ========================= */
+
+.empty-state {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+.empty-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f3f4f6;
+    border-radius: 50%;
+
+    font-size: 23px;
+}
+
+.empty-title {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.empty-description {
+    margin-top: 7px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* =========================
+   CHARGEMENT
+   ========================= */
+
+.loading {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* =========================
+   MESSAGE
+   ========================= */
+
+.message {
+    margin: 12px 0;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.error {
+    color: var(--danger);
+}
+
+/* =========================
+   NAVIGATION
+   ========================= */
+
+.bottom-nav {
+    position: fixed;
+    z-index: 100;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 72px;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    background: rgba(255,255,255,.97);
+    border-top: 1px solid var(--border);
+
+    backdrop-filter: blur(10px);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    color: #6b7280;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.nav-item.active {
+    color: var(--dark);
+}
+
+.nav-icon {
+    width: 20px;
+    height: 20px;
+    border: 1.8px solid currentColor;
+    border-radius: 5px;
+}
+
+.nav-team,
+.nav-profile {
+    border-radius: 50%;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 500px) {
+
+    .filters {
+        grid-template-columns: 1fr;
+    }
+
+    .transaction-top {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .transaction-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="header-content">
+
+        <div class="brand">
+
+            <img
+                src="logo.png"
+                alt="EXONPAY"
+            >
+
+            <div class="brand-name">
+                EXONPAY
+            </div>
+
+        </div>
+
+        <div class="page-title">
+            Transactions
+        </div>
+
+        <div class="page-subtitle">
+            Consultez l'historique de vos opérations.
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="content">
+
+    <!-- ID PROFESSIONNEL -->
+
+    <section class="professional-card">
+
+        <div class="professional-label">
+            ID professionnel
+        </div>
+
+        <div
+            id="professionalId"
+            class="professional-id"
+        >
+            --
+        </div>
+
+    </section>
+
+
+    <!-- FILTRES -->
+
+    <section class="filters">
+
+        <select
+            id="typeFilter"
+            class="filter"
+        >
+
+            <option value="">
+                Toutes les transactions
+            </option>
+
+            <option value="deposit">
+                Rechargements
+            </option>
+
+            <option value="withdrawal">
+                Retraits
+            </option>
+
+            <option value="transfer">
+                Transferts
+            </option>
+
+            <option value="purchase">
+                Achats
+            </option>
+
+        </select>
+
+
+        <select
+            id="statusFilter"
+            class="filter"
+        >
+
+            <option value="">
+                Tous les statuts
+            </option>
+
+            <option value="completed">
+                Terminées
+            </option>
+
+            <option value="pending">
+                En attente
+            </option>
+
+            <option value="failed">
+                Échouées
+            </option>
+
+        </select>
+
+    </section>
+
+
+    <div
+        id="message"
+        class="message"
+    ></div>
+
+
+    <div class="section-title">
+        Historique
+    </div>
+
+
+    <div
+        id="loading"
+        class="loading"
+    >
+        Chargement des transactions…
+    </div>
+
+
+    <div
+        id="emptyState"
+        class="empty-state"
+        style="display:none;"
+    >
+
+        <div class="empty-icon">
+            ↔
+        </div>
+
+        <div class="empty-title">
+            Aucune transaction
+        </div>
+
+        <div class="empty-description">
+            Vos opérations apparaîtront ici.
+        </div>
+
+    </div>
+
+
+    <div
+        id="transactions"
+        class="transactions"
+    ></div>
+
+</main>
+
+
+<nav class="bottom-nav">
+
+    <a
+        href="dashboard.html"
+        class="nav-item"
+    >
+        <span class="nav-icon"></span>
+        <span>Accueil</span>
+    </a>
+
+
+    <a
+        href="products.html"
+        class="nav-item"
+    >
+        <span class="nav-icon"></span>
+        <span>Produit</span>
+    </a>
+
+
+    <a
+        href="team.html"
+        class="nav-item"
+    >
+        <span class="nav-icon nav-team"></span>
+        <span>Équipe</span>
+    </a>
+
+
+    <a
+        href="profile.html"
+        class="nav-item active"
+    >
+        <span class="nav-icon nav-profile"></span>
+        <span>Profil</span>
+    </a>
+
+</nav>
+
+
+<script src="transactions.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EXONPAY - Profil</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    padding-bottom:85px;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f6f8;
+    color:#111827;
+}
+
+.header{
+    position:relative;
+    overflow:hidden;
+    background:#111827;
+    color:#fff;
+    padding:22px 18px 82px;
+    border-radius:0 0 30px 30px;
+}
+
+.background-logos{
+    position:absolute;
+    inset:0;
+    opacity:.05;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.background-logos img{
+    position:absolute;
+    width:110px;
+    height:110px;
+    object-fit:contain;
+}
+
+.logo1{left:3%;top:0}
+.logo2{left:43%;top:55px}
+.logo3{right:3%;top:-15px}
+.logo4{left:20%;bottom:-30px}
+.logo5{right:20%;bottom:-25px}
+
+.header-content{
+    position:relative;
+    z-index:2;
+    max-width:900px;
+    margin:auto;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.brand img{
+    width:42px;
+    height:42px;
+    object-fit:contain;
+    border-radius:10px;
+}
+
+.brand-name{
+    font-size:18px;
+    font-weight:800;
+}
+
+.title{
+    margin-top:24px;
+    font-size:24px;
+    font-weight:800;
+}
+
+.subtitle{
+    margin-top:7px;
+    color:rgba(255,255,255,.7);
+    font-size:13px;
+}
+
+.content{
+    max-width:900px;
+    margin:-50px auto 0;
+    padding:0 16px;
+    position:relative;
+    z-index:5;
+}
+
+/* CARTE */
+
+.profile-card{
+    position:relative;
+    overflow:hidden;
+    min-height:235px;
+    padding:22px;
+    border-radius:23px;
+
+    background:linear-gradient(
+        135deg,
+        #151b27,
+        #252d3b
+    );
+
+    color:#fff;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.18);
+}
+
+.card-pattern{
+    position:absolute;
+    inset:0;
+    opacity:.055;
+    pointer-events:none;
+}
+
+.card-pattern img{
+    position:absolute;
+    width:90px;
+    height:90px;
+    object-fit:contain;
+}
+
+.pattern1{
+    right:-5px;
+    top:-10px;
+}
+
+.pattern2{
+    right:75px;
+    bottom:-15px;
+}
+
+.pattern3{
+    left:40px;
+    bottom:-25px;
+}
+
+.card-top{
+    position:relative;
+    z-index:2;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+
+    gap:15px;
+}
+
+.card-label{
+    color:rgba(255,255,255,.6);
+    font-size:9px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.professional-id{
+    margin-top:6px;
+    font-size:16px;
+    font-weight:800;
+}
+
+.country{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    text-align:right;
+}
+
+.flag{
+    font-size:20px;
+}
+
+.country-name{
+    font-size:12px;
+    font-weight:700;
+}
+
+.phone{
+    margin-top:5px;
+    color:rgba(255,255,255,.7);
+    font-size:11px;
+}
+
+.balances{
+    position:relative;
+    z-index:2;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+
+    margin-top:30px;
+}
+
+.balance{
+    padding:12px;
+
+    background:rgba(255,255,255,.07);
+
+    border:1px solid rgba(255,255,255,.09);
+
+    border-radius:12px;
+}
+
+.balance-label{
+    color:rgba(255,255,255,.6);
+    font-size:10px;
+}
+
+.balance-value{
+    margin-top:6px;
+    font-size:17px;
+    font-weight:800;
+}
+
+.card-buttons{
+    position:relative;
+    z-index:2;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:10px;
+
+    margin-top:13px;
+}
+
+.card-button{
+    height:42px;
+
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:10px;
+
+    background:rgba(255,255,255,.1);
+
+    color:#fff;
+
+    font-size:12px;
+    font-weight:800;
+
+    cursor:pointer;
+}
+
+.card-button.primary{
+    background:#fff;
+    color:#111827;
+}
+
+/* MENU */
+
+.menu{
+    margin-top:20px;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:9px;
+}
+
+.menu-button{
+    width:100%;
+
+    min-height:62px;
+
+    display:flex;
+    align-items:center;
+
+    padding:12px 15px;
+
+    background:#fff;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:14px;
+
+    color:#111827;
+
+    text-decoration:none;
+
+    cursor:pointer;
+}
+
+.menu-icon{
+    width:38px;
+    height:38px;
+
+    flex:0 0 38px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-right:13px;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:10px;
+}
+
+.icon-shape{
+    width:16px;
+    height:16px;
+
+    border:1.7px solid #374151;
+
+    border-radius:4px;
+}
+
+.menu-text{
+    flex:1;
+}
+
+.menu-title{
+    font-size:13px;
+    font-weight:800;
+}
+
+.menu-description{
+    margin-top:3px;
+    color:#6b7280;
+    font-size:10px;
+}
+
+.arrow{
+    color:#9ca3af;
+    font-size:18px;
+}
+
+.logout{
+    margin-top:7px;
+    color:#b91c1c;
+}
+
+.logout .menu-icon{
+    border-color:#fecaca;
+}
+
+.logout .icon-shape{
+    border-color:#b91c1c;
+}
+
+/* MESSAGE */
+
+.message{
+    display:none;
+
+    position:fixed;
+    z-index:500;
+
+    left:16px;
+    right:16px;
+    bottom:90px;
+
+    padding:13px;
+
+    background:#111827;
+    color:#fff;
+
+    border-radius:11px;
+
+    text-align:center;
+
+    font-size:12px;
+    font-weight:700;
+}
+
+/* NAVIGATION */
+
+.bottom-nav{
+    position:fixed;
+    z-index:100;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    height:72px;
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+
+    background:rgba(255,255,255,.97);
+
+    border-top:1px solid #e5e7eb;
+}
+
+.nav-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    gap:6px;
+
+    color:#6b7280;
+
+    text-decoration:none;
+
+    font-size:11px;
+    font-weight:700;
+}
+
+.nav-item.active{
+    color:#111827;
+}
+
+.nav-icon{
+    width:20px;
+    height:20px;
+
+    border:1.8px solid currentColor;
+
+    border-radius:5px;
+}
+
+.nav-team{
+    border-radius:50%;
+}
+
+.nav-profile{
+    border-radius:50%;
+}
+
+@media(max-width:500px){
+
+    .card-top{
+        gap:8px;
+    }
+
+    .country{
+        max-width:145px;
+    }
+
+    .balances{
+        gap:8px;
+    }
+
+    .balance-value{
+        font-size:15px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="background-logos">
+
+        <img class="logo1" src="logo.png" alt="">
+        <img class="logo2" src="logo.png" alt="">
+        <img class="logo3" src="logo.png" alt="">
+        <img class="logo4" src="logo.png" alt="">
+        <img class="logo5" src="logo.png" alt="">
+
+    </div>
+
+    <div class="header-content">
+
+        <div class="brand">
+
+            <img src="logo.png" alt="EXONPAY">
+
+            <div class="brand-name">
+                EXONPAY
+            </div>
+
+        </div>
+
+        <div class="title">
+            Profil
+        </div>
+
+        <div class="subtitle">
+            Gérez votre compte EXONPAY.
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="content">
+
+<section class="profile-card">
+
+    <div class="card-pattern">
+
+        <img
+            class="pattern1"
+            src="logo.png"
+            alt=""
+        >
+
+        <img
+            class="pattern2"
+            src="logo.png"
+            alt=""
+        >
+
+        <img
+            class="pattern3"
+            src="logo.png"
+            alt=""
+        >
+
+    </div>
+
+
+    <div class="card-top">
+
+        <div>
+
+            <div class="card-label">
+                Professionnel
+            </div>
+
+            <div
+                id="professionalId"
+                class="professional-id"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="country">
+
+            <span
+                id="countryFlag"
+                class="flag"
+            >
+                —
+            </span>
+
+            <div>
+
+                <div
+                    id="countryName"
+                    class="country-name"
+                >
+                    —
+                </div>
+
+                <div
+                    id="phoneNumber"
+                    class="phone"
+                >
+                    —
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="balances">
+
+        <div class="balance">
+
+            <div class="balance-label">
+                Solde principal
+            </div>
+
+            <div
+                id="principalBalance"
+                class="balance-value"
+            >
+                0 FCFA
+            </div>
+
+        </div>
+
+
+        <div class="balance">
+
+            <div class="balance-label">
+                Solde retrait
+            </div>
+
+            <div
+                id="withdrawalBalance"
+                class="balance-value"
+            >
+                0 FCFA
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card-buttons">
+
+        <button
+            type="button"
+            class="card-button primary"
+            onclick="window.location.href='deposit.html'"
+        >
+            Recharger
+        </button>
+
+        <button
+            type="button"
+            class="card-button"
+            onclick="window.location.href='withdraw.html'"
+        >
+            Retirer
+        </button>
+
+    </div>
+
+</section>
+
+
+<section class="menu">
+
+    <a
+        href="transactions.html"
+        class="menu-button"
+    >
+
+        <div class="menu-icon">
+            <span class="icon-shape"></span>
+        </div>
+
+        <div class="menu-text">
+
+            <div class="menu-title">
+                Transactions
+            </div>
+
+            <div class="menu-description">
+                Consultez votre historique financier.
+            </div>
+
+        </div>
+
+        <div class="arrow">
+            ›
+        </div>
+
+    </a>
+
+
+    <a
+        href="my-products.html"
+        class="menu-button"
+    >
+
+        <div class="menu-icon">
+            <span class="icon-shape"></span>
+        </div>
+
+        <div class="menu-text">
+
+            <div class="menu-title">
+                Mes produits
+            </div>
+
+            <div class="menu-description">
+                Consultez vos produits.
+            </div>
+
+        </div>
+
+        <div class="arrow">
+            ›
+        </div>
+
+    </a>
+
+
+    <a
+        href="bank.html"
+        class="menu-button"
+    >
+
+        <div class="menu-icon">
+            <span class="icon-shape"></span>
+        </div>
+
+        <div class="menu-text">
+
+            <div class="menu-title">
+                Compte bancaire
+            </div>
+
+            <div class="menu-description">
+                Gérez vos informations bancaires.
+            </div>
+
+        </div>
+
+        <div class="arrow">
+            ›
+        </div>
+
+    </a>
+
+
+    <a
+        href="https://t.me/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="menu-button"
+    >
+
+        <div class="menu-icon">
+            <span class="icon-shape"></span>
+        </div>
+
+        <div class="menu-text">
+
+            <div class="menu-title">
+                Canal Telegram
+            </div>
+
+            <div class="menu-description">
+                Rejoignez notre canal officiel.
+            </div>
+
+        </div>
+
+        <div class="arrow">
+            ›
+        </div>
+
+    </a>
+
+
+    <button
+        id="logoutButton"
+        class="menu-button logout"
+        type="button"
+    >
+
+        <div class="menu-icon">
+            <span class="icon-shape"></span>
+        </div>
+
+        <div class="menu-text">
+
+            <div class="menu-title">
+                Déconnexion
+            </div>
+
+            <div class="menu-description">
+                Fermer votre session EXONPAY.
+            </div>
+
+        </div>
+
+        <div class="arrow">
+            ›
+        </div>
+
+    </button>
+
+</section>
+
+</main>
+
+
+<div
+    id="message"
+    class="message"
+></div>
+
+
+<nav class="bottom-nav">
+
+    <a
+        href="dashboard.html"
+        class="nav-item"
+    >
+        <span class="nav-icon"></span>
+        <span>Accueil</span>
+    </a>
+
+    <a
+        href="products.html"
+        class="nav-item"
+    >
+        <span class="nav-icon"></span>
+        <span>Produit</span>
+    </a>
+
+    <a
+        href="team.html"
+        class="nav-item"
+    >
+        <span class="nav-icon nav-team"></span>
+        <span>Équipe</span>
+    </a>
+
+    <a
+        href="profile.html"
+        class="nav-item active"
+    >
+        <span class="nav-icon nav-profile"></span>
+        <span>Profil</span>
+    </a>
+
+</nav>
+
+
+<script>
+
+/*
+=========================================================
+CONFIGURATION
+=========================================================
+*/
+
+const SUPABASE_URL =
+    "https://euyvppbbhjrjcbgmdian.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1eXZwcGJiaGpyamNiZ21kaWFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMjIxNjYsImV4cCI6MjEwMzY5ODE2Nn0.BOH9ZGx5I34wzIkl8oGU7_BZ8yN3zWZSqIrBceb6aH0";
+
+
+/*
+=========================================================
+SESSION
+=========================================================
+*/
+
+const savedUser =
+    localStorage.getItem(
+        "exonpay_user"
+    );
+
+
+if (!savedUser) {
+
+    window.location.replace(
+        "login.html"
+    );
+
+}
+
+
+let sessionUser;
+
+try {
+
+    sessionUser =
+        JSON.parse(savedUser);
+
+} catch (error) {
+
+    localStorage.removeItem(
+        "exonpay_user"
+    );
+
+    window.location.replace(
+        "login.html"
+    );
+
+}
+
+
+const userId =
+    sessionUser.user_id;
+
+
+/*
+=========================================================
+HEADERS
+=========================================================
+*/
+
+function getHeaders(){
+
+    return {
+
+        "apikey":
+            SUPABASE_ANON_KEY,
+
+        "Authorization":
+            "Bearer " +
+            SUPABASE_ANON_KEY,
+
+        "Content-Type":
+            "application/json",
+
+        "Accept":
+            "application/json"
+
+    };
+
+}
+
+
+/*
+=========================================================
+FORMAT FCFA
+=========================================================
+*/
+
+function formatMoney(value){
+
+    return Number(
+        value || 0
+    ).toLocaleString(
+        "fr-FR",
+        {
+            maximumFractionDigits:2
+        }
+    ) + " FCFA";
+
+}
+
+
+/*
+=========================================================
+FLAG ISO
+=========================================================
+*/
+
+function isoToFlag(
+    iso
+){
+
+    if (
+        !iso ||
+        iso.length !== 2
+    ){
+
+        return "—";
+
+    }
+
+
+    return iso
+        .trim()
+        .toUpperCase()
+        .split("")
+        .map(
+            char =>
+                String.fromCodePoint(
+                    127397 +
+                    char.charCodeAt(0)
+                )
+        )
+        .join("");
+
+}
+
+
+/*
+=========================================================
+RECUPERER USER + COUNTRY
+=========================================================
+
+users.country_id -> countries.id
+=========================================================
+*/
+
+async function loadUser(){
+
+    const url =
+
+        SUPABASE_URL +
+
+        "/rest/v1/users" +
+
+        "?select=id,professional_id,phone_number,country_id,countries(id,name,iso_code,dial_code)" +
+
+        "&id=eq." +
+
+        encodeURIComponent(
+            userId
+        ) +
+
+        "&limit=1";
+
+
+    const response =
+        await fetch(
+            url,
+            {
+                headers:
+                    getHeaders()
+            }
+        );
+
+
+    if (!response.ok){
+
+        const errorText =
+            await response.text();
+
+        console.error(
+            "Erreur users:",
+            errorText
+        );
+
+        throw new Error(
+            "Impossible de récupérer les informations du compte."
+        );
+
+    }
+
+
+    const data =
+        await response.json();
+
+
+    if (
+        !Array.isArray(data) ||
+        data.length === 0
+    ){
+
+        throw new Error(
+            "Utilisateur introuvable."
+        );
+
+    }
+
+
+    return data[0];
+
+}
+
+
+/*
+=========================================================
+RECUPERER WALLET
+=========================================================
+*/
+
+async function loadWallet(){
+
+    const url =
+
+        SUPABASE_URL +
+
+        "/rest/v1/wallets" +
+
+        "?select=principal_balance,withdrawal_balance" +
+
+        "&user_id=eq." +
+
+        encodeURIComponent(
+            userId
+        ) +
+
+        "&limit=1";
+
+
+    const response =
+        await fetch(
+            url,
+            {
+                headers:
+                    getHeaders()
+            }
+        );
+
+
+    if (!response.ok){
+
+        const errorText =
+            await response.text();
+
+        console.error(
+            "Erreur wallets:",
+            errorText
+        );
+
+        throw new Error(
+            "Impossible de récupérer les soldes."
+        );
+
+    }
+
+
+    const data =
+        await response.json();
+
+
+    return data[0] || {
+
+        principal_balance:0,
+
+        withdrawal_balance:0
+
+    };
+
+}
+
+
+/*
+=========================================================
+AFFICHER USER
+=========================================================
+*/
+
+function renderUser(
+    user
+){
+
+    document.getElementById(
+        "professionalId"
+    ).textContent =
+        user.professional_id ||
+        "—";
+
+
+    document.getElementById(
+        "phoneNumber"
+    ).textContent =
+        user.phone_number ||
+        "—";
+
+
+    const country =
+        user.countries;
+
+
+    if (
+        country
+    ){
+
+        document.getElementById(
+            "countryName"
+        ).textContent =
+            country.name ||
+            "—";
+
+
+        document.getElementById(
+            "countryFlag"
+        ).textContent =
+            isoToFlag(
+                country.iso_code
+            );
+
+    } else {
+
+        document.getElementById(
+            "countryName"
+        ).textContent =
+            "Pays non renseigné";
+
+
+        document.getElementById(
+            "countryFlag"
+        ).textContent =
+            "—";
+
+    }
+
+}
+
+
+/*
+=========================================================
+AFFICHER WALLET
+=========================================================
+*/
+
+function renderWallet(
+    wallet
+){
+
+    document.getElementById(
+        "principalBalance"
+    ).textContent =
+        formatMoney(
+            wallet.principal_balance
+        );
+
+
+    document.getElementById(
+        "withdrawalBalance"
+    ).textContent =
+        formatMoney(
+            wallet.withdrawal_balance
+        );
+
+}
+
+
+/*
+=========================================================
+CHARGEMENT
+=========================================================
+*/
+
+async function loadPage(){
+
+    try {
+
+        const [
+            user,
+            wallet
+        ] = await Promise.all([
+
+            loadUser(),
+
+            loadWallet()
+
+        ]);
+
+
+        renderUser(
+            user
+        );
+
+
+        renderWallet(
+            wallet
+        );
+
+
+    } catch(error){
+
+        console.error(
+            error
+        );
+
+
+        showMessage(
+            error.message ||
+            "Impossible de charger le profil."
+        );
+
+    }
+
+}
+
+
+/*
+=========================================================
+MESSAGE
+=========================================================
+*/
+
+function showMessage(
+    text
+){
+
+    const message =
+        document.getElementById(
+            "message"
+        );
+
+
+    message.textContent =
+        text;
+
+
+    message.style.display =
+        "block";
+
+
+    setTimeout(
+        () => {
+
+            message.style.display =
+                "none";
+
+        },
+        4000
+    );
+
+}
+
+
+/*
+=========================================================
+DECONNEXION
+=========================================================
+*/
+
+document.getElementById(
+    "logoutButton"
+).addEventListener(
+    "click",
+    () => {
+
+        localStorage.removeItem(
+            "exonpay_user"
+        );
+
+        window.location.replace(
+            "login.html"
+        );
+
+    }
+);
+
+
+/*
+=========================================================
+DEMARRAGE
+=========================================================
+*/
+
+loadPage();
+
+
+/*
+Actualisation des informations
+toutes les 30 secondes.
+*/
+
+setInterval(
+    loadPage,
+    30000
+);
+
+</script>
+
+</body>
+</html>

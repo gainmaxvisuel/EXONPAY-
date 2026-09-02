@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EXONPAY - Équipe</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#f5f6f8;--white:#fff;--dark:#111827;--text:#1f2937;
+  --muted:#6b7280;--border:#e5e7eb;--success:#15803d;
+}
+body{margin:0;min-height:100vh;padding-bottom:82px;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+.header{position:relative;overflow:hidden;background:var(--dark);color:#fff;padding:24px 20px 78px;border-radius:0 0 28px 28px}
+.background-logos{position:absolute;inset:0;overflow:hidden;pointer-events:none;opacity:.055}
+.background-logos img{position:absolute;width:115px;height:115px;object-fit:contain}
+.logo-1{top:5px;left:5%;transform:rotate(-12deg)}
+.logo-2{top:70px;left:43%;transform:rotate(15deg)}
+.logo-3{top:-20px;right:4%;transform:rotate(-18deg)}
+.logo-4{bottom:-35px;left:22%;transform:rotate(20deg)}
+.logo-5{bottom:-20px;right:25%;transform:rotate(-10deg)}
+.header-content{position:relative;z-index:2;max-width:900px;margin:auto}
+.brand{display:flex;align-items:center;gap:11px;margin-bottom:24px}
+.brand img{width:42px;height:42px;object-fit:contain;border-radius:10px}
+.brand-name{font-size:18px;font-weight:800;letter-spacing:.5px}
+.title{font-size:25px;font-weight:800}
+.subtitle{margin-top:8px;font-size:14px;color:rgba(255,255,255,.72)}
+.content{position:relative;z-index:5;width:100%;max-width:900px;margin:-43px auto 0;padding:0 18px}
+.card{background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:0 8px 25px rgba(0,0,0,.06)}
+.invite-card{padding:18px}
+.label{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:8px}
+.code-row{display:flex;gap:9px;align-items:center}
+.code{flex:1;min-width:0;padding:13px 14px;background:#f3f4f6;border-radius:11px;font-size:18px;font-weight:800;letter-spacing:.8px;overflow:hidden;text-overflow:ellipsis}
+.copy-btn,.share-btn{border:0;border-radius:11px;padding:13px 15px;font-weight:800;cursor:pointer;background:var(--dark);color:#fff}
+.link-box{margin-top:12px;padding:12px;background:#f9fafb;border:1px solid var(--border);border-radius:11px;font-size:12px;color:var(--muted);word-break:break-all}
+.section{margin-top:22px}
+.section-title{font-size:17px;font-weight:800;margin-bottom:11px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{padding:17px 13px;text-align:center}
+.stat-value{font-size:23px;font-weight:800}
+.stat-label{margin-top:5px;font-size:12px;color:var(--muted)}
+.level-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.level-tab{padding:11px 7px;border:1px solid var(--border);background:#fff;border-radius:11px;font-weight:800;color:var(--muted);cursor:pointer}
+.level-tab.active{background:var(--dark);color:#fff;border-color:var(--dark)}
+.members{overflow:hidden}
+.member{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 16px;border-bottom:1px solid var(--border)}
+.member:last-child{border-bottom:0}
+.member-main{min-width:0}
+.member-id{font-weight:800;font-size:14px}
+.member-meta{margin-top:5px;color:var(--muted);font-size:12px}
+.badge{padding:6px 9px;border-radius:999px;background:#f0fdf4;color:var(--success);font-size:11px;font-weight:800;white-space:nowrap}
+.badge.off{background:#f3f4f6;color:var(--muted)}
+.empty{padding:28px 18px;text-align:center;color:var(--muted);font-size:14px}
+.commission{display:flex;justify-content:space-between;align-items:center;padding:15px 16px}
+.commission strong{font-size:18px}
+.commission span{font-size:13px;color:var(--muted)}
+.bottom-nav{position:fixed;z-index:100;left:0;right:0;bottom:0;height:72px;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.97);border-top:1px solid var(--border);backdrop-filter:blur(10px)}
+.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#6b7280;text-decoration:none;font-size:11px;font-weight:700}
+.nav-item.active{color:var(--dark)}
+.nav-icon{width:20px;height:20px;border:1.8px solid currentColor;border-radius:5px}
+.nav-team{border-radius:50%}
+.nav-profile{border-radius:50%}
+.message{margin-top:8px;font-size:12px;color:var(--success);font-weight:700;min-height:16px}
+@media(max-width:600px){
+  .stats{gap:7px}.stat{padding:15px 8px}.stat-value{font-size:20px}
+  .code-row{align-items:stretch}.copy-btn{padding:11px 12px}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="background-logos">
+    <img class="logo-1" src="logo.png" alt="">
+    <img class="logo-2" src="logo.png" alt="">
+    <img class="logo-3" src="logo.png" alt="">
+    <img class="logo-4" src="logo.png" alt="">
+    <img class="logo-5" src="logo.png" alt="">
+  </div>
+  <div class="header-content">
+    <div class="brand">
+      <img src="logo.png" alt="EXONPAY">
+      <div class="brand-name">EXONPAY</div>
+    </div>
+    <div class="title">Mon équipe</div>
+    <div class="subtitle">Invitez des membres et suivez votre réseau.</div>
+  </div>
+</header>
+
+<main class="content">
+
+  <section class="card invite-card">
+    <div class="label">Mon code de parrainage</div>
+    <div class="code-row">
+      <div id="referralCode" class="code">Chargement...</div>
+      <button id="copyCode" class="copy-btn">Copier</button>
+    </div>
+    <div class="label" style="margin-top:15px">Lien d'invitation</div>
+    <div id="inviteLink" class="link-box">Chargement...</div>
+    <button id="shareLink" class="share-btn" style="width:100%;margin-top:10px">Partager le lien</button>
+    <div id="copyMessage" class="message"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Résumé de l'équipe</div>
+    <div class="stats">
+      <div class="card stat">
+        <div id="totalMembers" class="stat-value">0</div>
+        <div class="stat-label">Total membres</div>
+      </div>
+      <div class="card stat">
+        <div id="level1Count" class="stat-value">0</div>
+        <div class="stat-label">Niveau 1</div>
+      </div>
+      <div class="card stat">
+        <div id="level2Count" class="stat-value">0</div>
+        <div class="stat-label">Niveau 2</div>
+      </div>
+    </div>
+    <div class="stats" style="margin-top:10px">
+      <div class="card stat">
+        <div id="level3Count" class="stat-value">0</div>
+        <div class="stat-label">Niveau 3</div>
+      </div>
+      <div class="card stat">
+        <div id="commissionTotal" class="stat-value">0</div>
+        <div class="stat-label">Commissions FCFA</div>
+      </div>
+      <div class="card stat">
+        <div id="activeMembers" class="stat-value">0</div>
+        <div class="stat-label">Membres actifs</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Membres de l'équipe</div>
+    <div class="level-tabs">
+      <button class="level-tab active" data-level="1">Niveau 1</button>
+      <button class="level-tab" data-level="2">Niveau 2</button>
+      <button class="level-tab" data-level="3">Niveau 3</button>
+    </div>
+    <div id="membersList" class="card members">
+      <div class="empty">Chargement de l'équipe...</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Commissions</div>
+    <div class="card commission">
+      <div>
+        <strong id="commissionAmount">0 FCFA</strong>
+        <div>Commissions créditées par votre équipe</div>
+      </div>
+      <span>Créditées</span>
+    </div>
+  </section>
+
+</main>
+
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="nav-item"><span class="nav-icon"></span><span>Accueil</span></a>
+  <a href="products.html" class="nav-item"><span class="nav-icon"></span><span>Produit</span></a>
+  <a href="team.html" class="nav-item active"><span class="nav-icon nav-team"></span><span>Équipe</span></a>
+  <a href="profile.html" class="nav-item"><span class="nav-icon nav-profile"></span><span>Profil</span></a>
+</nav>
+
+<script>
+const SUPABASE_URL = "https://euyvppbbhjrjcbgmdian.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1eXZwcGJiaGpyamNiZ21kaWFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMjIxNjYsImV4cCI6MjEwMzY5ODE2Nn0.BOH9ZGx5I34wzIkl8oGU7_BZ8yN3zWZSqIrBceb6aH0";
+</script>
+<script>
+/*
+  NOTE:
+  The ANON key above must be identical to the key used by dashboard.html/login.html.
+  The page deliberately reads the existing exonpay_user session and never stores a password.
+*/
+
+const savedUser = localStorage.getItem("exonpay_user");
+if (!savedUser) {
+  window.location.replace("login.html");
+  throw new Error("Session EXONPAY absente.");
+}
+
+let sessionUser;
+try {
+  sessionUser = JSON.parse(savedUser);
+} catch {
+  localStorage.removeItem("exonpay_user");
+  window.location.replace("login.html");
+  throw new Error("Session EXONPAY invalide.");
+}
+
+function headers() {
+  return {
+    "apikey": SUPABASE_ANON_KEY,
+    "Authorization": "Bearer " + SUPABASE_ANON_KEY,
+    "Accept": "application/json"
+  };
+}
+
+function money(value) {
+  return Number(value || 0).toLocaleString("fr-FR", {maximumFractionDigits:0});
+}
+
+let allMembers = [];
+let membersByLevel = {1:[],2:[],3:[]};
+let selectedLevel = 1;
+
+async function api(path) {
+  const response = await fetch(SUPABASE_URL + path, {headers:headers()});
+  const raw = await response.text();
+  let data = null;
+  try { data = raw ? JSON.parse(raw) : null; } catch {}
+  if (!response.ok) throw new Error(data?.message || data?.details || "Erreur Supabase");
+  return data;
+}
+
+async function loadCurrentUser() {
+  const id = sessionUser.user_id;
+  const data = await api(
+    "/rest/v1/users?select=id,referral_code,professional_id& id=eq.".replace(" ", "") +
+    encodeURIComponent(id) + "&limit=1"
+  );
+  if (!data.length) throw new Error("Utilisateur introuvable.");
+
+  const user = data[0];
+  const code = user.referral_code || "";
+  const link = "https://exonpay.vercel.app/?ref=" + encodeURIComponent(code);
+
+  document.getElementById("referralCode").textContent = code || "--";
+  document.getElementById("inviteLink").textContent = link;
+
+  return {id:user.id, referral_code:code, link};
+}
+
+async function loadNetwork(userId) {
+  const users = await api(
+    "/rest/v1/users?select=id,professional_id,sponsor_id,is_active,created_at,country_id&order=created_at.desc"
+  );
+
+  const direct = users.filter(u => u.sponsor_id === userId);
+  const level1Ids = new Set(direct.map(u => u.id));
+  const level2 = users.filter(u => level1Ids.has(u.sponsor_id));
+  const level2Ids = new Set(level2.map(u => u.id));
+  const level3 = users.filter(u => level2Ids.has(u.sponsor_id));
+
+  membersByLevel = {1:direct,2:level2,3:level3};
+  allMembers = [...direct,...level2,...level3];
+
+  document.getElementById("level1Count").textContent = direct.length;
+  document.getElementById("level2Count").textContent = level2.length;
+  document.getElementById("level3Count").textContent = level3.length;
+  document.getElementById("totalMembers").textContent = allMembers.length;
+  document.getElementById("activeMembers").textContent =
+    allMembers.filter(u => u.is_active !== false).length;
+
+  renderMembers();
+}
+
+async function loadCommissions(userId) {
+  const data = await api(
+    "/rest/v1/commissions?select=commission_amount,status,level&beneficiary_user_id=eq." +
+    encodeURIComponent(userId) + "&order=created_at.desc"
+  );
+
+  const credited = data
+    .filter(c => c.status === "credited")
+    .reduce((sum,c) => sum + Number(c.commission_amount || 0), 0);
+
+  document.getElementById("commissionTotal").textContent = money(credited);
+  document.getElementById("commissionAmount").textContent = money(credited) + " FCFA";
+}
+
+function formatDate(value) {
+  if (!value) return "--";
+  const d = new Date(value);
+  return d.toLocaleDateString("fr-FR", {day:"2-digit",month:"2-digit",year:"numeric"});
+}
+
+function renderMembers() {
+  const list = document.getElementById("membersList");
+  const members = membersByLevel[selectedLevel] || [];
+
+  if (!members.length) {
+    list.innerHTML = '<div class="empty">Aucun membre dans ce niveau pour le moment.</div>';
+    return;
+  }
+
+  list.innerHTML = members.map(member => {
+    const status = member.is_active === false ? "Inactif" : "Actif";
+    return `
+      <div class="member">
+        <div class="member-main">
+          <div class="member-id">${escapeHtml(member.professional_id || "Membre EXONPAY")}</div>
+          <div class="member-meta">Inscrit le ${formatDate(member.created_at)}</div>
+        </div>
+        <div class="badge ${member.is_active === false ? "off" : ""}">${status}</div>
+      </div>
+    `;
+  }).join("");
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[c]));
+}
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    document.getElementById("copyMessage").textContent = "Copié avec succès.";
+    setTimeout(() => document.getElementById("copyMessage").textContent = "", 1800);
+  } catch {
+    document.getElementById("copyMessage").textContent = "Copie impossible sur cet appareil.";
+  }
+}
+
+document.getElementById("copyCode").addEventListener("click", () => {
+  const code = document.getElementById("referralCode").textContent;
+  if (code && code !== "--") copyText(code);
+});
+
+document.getElementById("shareLink").addEventListener("click", async () => {
+  const link = document.getElementById("inviteLink").textContent;
+  if (!link || link === "Chargement...") return;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title:"Invitation EXONPAY",
+        text:"Rejoins-moi sur EXONPAY avec mon lien d'invitation :",
+        url:link
+      });
+      return;
+    } catch {}
+  }
+  copyText(link);
+});
+
+document.querySelectorAll(".level-tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".level-tab").forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    selectedLevel = Number(tab.dataset.level);
+    renderMembers();
+  });
+});
+
+async function init() {
+  try {
+    const current = await loadCurrentUser();
+    await Promise.all([
+      loadNetwork(current.id),
+      loadCommissions(current.id)
+    ]);
+  } catch (error) {
+    console.error("Équipe EXONPAY:", error);
+    document.getElementById("membersList").innerHTML =
+      '<div class="empty">Impossible de charger votre équipe. Veuillez réessayer.</div>';
+  }
+}
+
+init();
+</script>
+</body>
+</html>

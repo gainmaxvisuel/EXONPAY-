@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>EXONPAY - Dépôt</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+}
+
+body{
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:#f4f5f7;
+    color:#111827;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    position:relative;
+    overflow:hidden;
+
+    background:#111827;
+    color:white;
+
+    padding:16px;
+}
+
+.header-bg{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+
+    opacity:.045;
+    pointer-events:none;
+}
+
+.header-bg img{
+    width:90px;
+    height:90px;
+    object-fit:contain;
+}
+
+.header-content{
+    position:relative;
+    z-index:2;
+
+    max-width:650px;
+    margin:auto;
+}
+
+.top{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.back{
+    width:40px;
+    height:40px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:11px;
+
+    color:white;
+    background:rgba(255,255,255,.06);
+
+    text-decoration:none;
+
+    font-size:25px;
+}
+
+.logo{
+    width:37px;
+    height:37px;
+    object-fit:contain;
+}
+
+.brand{
+    font-weight:800;
+    font-size:17px;
+}
+
+.title{
+    margin-top:18px;
+
+    font-size:24px;
+    font-weight:800;
+}
+
+.subtitle{
+    margin-top:5px;
+
+    font-size:12px;
+    color:rgba(255,255,255,.65);
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.container{
+    max-width:650px;
+    margin:auto;
+
+    padding:16px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+    background:white;
+
+    border:1px solid #e1e5e9;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0,0,0,.04);
+}
+
+
+/* =========================
+   LABEL
+========================= */
+
+label{
+    display:block;
+
+    margin-bottom:8px;
+
+    font-size:12px;
+    font-weight:800;
+
+    color:#374151;
+}
+
+
+/* =========================
+   INPUT
+========================= */
+
+.input-wrapper{
+    display:flex;
+    align-items:center;
+
+    border:1px solid #d9dee4;
+
+    border-radius:12px;
+
+    background:white;
+
+    overflow:hidden;
+}
+
+.currency{
+    padding-left:14px;
+
+    color:#6b7280;
+
+    font-size:13px;
+    font-weight:700;
+}
+
+input{
+    width:100%;
+
+    height:52px;
+
+    border:0;
+    outline:0;
+
+    padding:
+        0
+        14px;
+
+    font-size:16px;
+
+    background:transparent;
+}
+
+input:focus{
+    box-shadow:
+        inset 0 0 0 1px #111827;
+}
+
+
+/* =========================
+   INFO
+========================= */
+
+.info{
+    margin-top:9px;
+
+    font-size:11px;
+
+    color:#6b7280;
+
+    line-height:1.5;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+button{
+    width:100%;
+
+    height:53px;
+
+    margin-top:20px;
+
+    border:0;
+
+    border-radius:12px;
+
+    background:#111827;
+
+    color:white;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    cursor:pointer;
+}
+
+button:disabled{
+    opacity:.5;
+
+    cursor:not-allowed;
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.error{
+    display:none;
+
+    margin-top:14px;
+
+    padding:13px;
+
+    border:
+        1px solid
+        #fecaca;
+
+    border-radius:11px;
+
+    background:#fef2f2;
+
+    color:#b91c1c;
+
+    font-size:12px;
+
+    line-height:1.5;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.status{
+    display:none;
+
+    margin-top:14px;
+
+    padding:14px;
+
+    border:
+        1px solid
+        #dbeafe;
+
+    border-radius:11px;
+
+    background:#eff6ff;
+
+    color:#1d4ed8;
+
+    font-size:12px;
+
+    line-height:1.5;
+
+    text-align:center;
+}
+
+
+/* =========================
+   TRANSACTION
+========================= */
+
+.transaction{
+    display:none;
+
+    margin-top:15px;
+
+    padding:15px;
+
+    background:#f8fafc;
+
+    border-radius:12px;
+
+    text-align:center;
+}
+
+.transaction-label{
+    font-size:10px;
+
+    color:#6b7280;
+
+    text-transform:uppercase;
+
+    font-weight:800;
+}
+
+.transaction-id{
+    margin-top:7px;
+
+    font-size:15px;
+
+    font-weight:900;
+
+    word-break:break-all;
+}
+
+
+/* =========================
+   SMALL SCREEN
+========================= */
+
+@media(max-width:380px){
+
+    .container{
+        padding:12px 10px;
+    }
+
+    .card{
+        padding:16px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="header">
+
+    <div class="header-bg">
+
+        <img src="logo.png" alt="">
+        <img src="logo.png" alt="">
+        <img src="logo.png" alt="">
+
+    </div>
+
+
+    <div class="header-content">
+
+        <div class="top">
+
+            <a
+                href="dashboard.html"
+                class="back"
+            >
+                ‹
+            </a>
+
+            <img
+                src="logo.png"
+                class="logo"
+                alt="EXONPAY"
+            >
+
+            <div class="brand">
+                EXONPAY
+            </div>
+
+        </div>
+
+
+        <div class="title">
+            Dépôt
+        </div>
+
+
+        <div class="subtitle">
+            Rechargez votre compte EXONPAY.
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     CONTENT
+========================= -->
+
+<main class="container">
+
+    <section class="card">
+
+
+        <label for="amount">
+            Montant du dépôt
+        </label>
+
+
+        <div class="input-wrapper">
+
+            <span class="currency">
+                XOF
+            </span>
+
+            <input
+                id="amount"
+                type="number"
+                inputmode="numeric"
+                min="3000"
+                step="1"
+                placeholder="Ex. 5000"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="info">
+            Montant minimum : 3 000 XOF.
+        </div>
+
+
+        <button
+            id="depositButton"
+            type="button"
+        >
+            Continuer vers le paiement
+        </button>
+
+
+        <div
+            id="error"
+            class="error"
+        ></div>
+
+
+        <div
+            id="status"
+            class="status"
+        >
+            Création de votre demande de dépôt...
+        </div>
+
+
+        <div
+            id="transaction"
+            class="transaction"
+        >
+
+            <div class="transaction-label">
+                Transaction créée
+            </div>
+
+            <div
+                id="transactionId"
+                class="transaction-id"
+            ></div>
+
+        </div>
+
+
+    </section>
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   CONFIGURATION SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://euyvppbbhjrjcbgmdian.supabase.co";
+
+
+const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1eXZwcGJiaGpyamNiZ21kaWFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMjIxNjYsImV4cCI6MjEwMzY5ODE2Nn0.BOH9ZGx5I34wzIkl8oGU7_BZ8yN3zWZSqIrBceb6aH0";
+
+
+/*
+   Lien WestPay fourni.
+*/
+
+const PAYMENT_URL =
+    "https://link.westpay.cfd/link/u809y6b1mthvxxbo";
+
+
+/*
+   Minimum actuellement présent
+   dans platform_settings.
+*/
+
+const MINIMUM_DEPOSIT =
+    3000;
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const amountInput =
+    document.getElementById(
+        "amount"
+    );
+
+
+const depositButton =
+    document.getElementById(
+        "depositButton"
+    );
+
+
+const errorBox =
+    document.getElementById(
+        "error"
+    );
+
+
+const statusBox =
+    document.getElementById(
+        "status"
+    );
+
+
+const transactionBox =
+    document.getElementById(
+        "transaction"
+    );
+
+
+const transactionId =
+    document.getElementById(
+        "transactionId"
+    );
+
+
+/* =========================================================
+   SESSION UTILISATEUR
+========================================================= */
+
+const savedUser =
+    localStorage.getItem(
+        "exonpay_user"
+    );
+
+
+if(!savedUser){
+
+    window.location.replace(
+        "login.html"
+    );
+
+}
+
+
+let sessionUser = null;
+
+
+try{
+
+    sessionUser =
+        JSON.parse(
+            savedUser
+        );
+
+}catch(error){
+
+    localStorage.removeItem(
+        "exonpay_user"
+    );
+
+    window.location.replace(
+        "login.html"
+    );
+
+}
+
+
+/*
+   L'identifiant utilisé est le UUID
+   user_id de la session EXONPAY.
+*/
+
+const USER_ID =
+    sessionUser &&
+    sessionUser.user_id
+        ? sessionUser.user_id
+        : null;
+
+
+if(!USER_ID){
+
+    localStorage.removeItem(
+        "exonpay_user"
+    );
+
+    window.location.replace(
+        "login.html"
+    );
+
+}
+
+
+/* =========================================================
+   ERREUR
+========================================================= */
+
+function showError(
+    message
+){
+
+    errorBox.textContent =
+        message;
+
+    errorBox.style.display =
+        "block";
+
+}
+
+
+function hideError(){
+
+    errorBox.textContent =
+        "";
+
+    errorBox.style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   CREATION DU DEPOT
+========================================================= */
+
+async function createDeposit(
+    amount
+){
+
+    /*
+       Fonction réelle de la base :
+
+       create_deposit(
+           p_user_id,
+           p_amount,
+           p_payment_method,
+           p_payment_reference
+       )
+
+       Le dépôt reste "pending"
+       jusqu'à validation.
+    */
+
+
+    const response =
+        await fetch(
+
+            SUPABASE_URL +
+            "/rest/v1/rpc/create_deposit",
+
+            {
+
+                method:"POST",
+
+                headers:{
+
+                    "Content-Type":
+                        "application/json",
+
+                    "apikey":
+                        SUPABASE_ANON_KEY,
+
+                    "Authorization":
+                        "Bearer " +
+                        SUPABASE_ANON_KEY,
+
+                    "Accept":
+                        "application/json"
+
+                },
+
+                body:
+                    JSON.stringify({
+
+                        p_user_id:
+                            USER_ID,
+
+                        p_amount:
+                            amount,
+
+                        p_payment_method:
+                            "westpay",
+
+                        p_payment_reference:
+                            null
+
+                    })
+
+            }
+
+        );
+
+
+    const raw =
+        await response.text();
+
+
+    let data = null;
+
+
+    try{
+
+        data =
+            raw
+                ? JSON.parse(raw)
+                : null;
+
+    }catch(error){
+
+        data =
+            null;
+
+    }
+
+
+    if(
+        !response.ok
+    ){
+
+        console.error(
+            "create_deposit:",
+            response.status,
+            raw
+        );
+
+
+        let message =
+            "Impossible de créer le dépôt.";
+
+
+        if(
+            data &&
+            typeof data === "object"
+        ){
+
+            message =
+                data.message ||
+                data.details ||
+                data.hint ||
+                message;
+
+        }
+
+
+        throw new Error(
+            message
+        );
+
+    }
+
+
+    /*
+       La fonction retourne un tableau
+       contenant le dépôt créé.
+    */
+
+    if(
+        Array.isArray(data)
+    ){
+
+        return data[0] || null;
+
+    }
+
+
+    return data;
+
+}
+
+
+/* =========================================================
+   BOUTON DEPOT
+========================================================= */
+
+depositButton.addEventListener(
+    "click",
+    async function(){
+
+        hideError();
+
+
+        /*
+           Récupérer le montant.
+        */
+
+        const amount =
+            Number(
+                amountInput.value
+            );
+
+
+        /*
+           Vérification.
+        */
+
+        if(
+            !Number.isFinite(amount)
+        ){
+
+            showError(
+                "Veuillez saisir un montant valide."
+            );
+
+            amountInput.focus();
+
+            return;
+
+        }
+
+
+        if(
+            amount <= 0
+        ){
+
+            showError(
+                "Le montant doit être supérieur à zéro."
+            );
+
+            amountInput.focus();
+
+            return;
+
+        }
+
+
+        if(
+            amount < MINIMUM_DEPOSIT
+        ){
+
+            showError(
+                "Le dépôt minimum est de " +
+                MINIMUM_DEPOSIT.toLocaleString(
+                    "fr-FR"
+                ) +
+                " XOF."
+            );
+
+            amountInput.focus();
+
+            return;
+
+        }
+
+
+        /*
+           Désactiver le bouton
+           pendant la création.
+        */
+
+        depositButton.disabled =
+            true;
+
+
+        depositButton.textContent =
+            "Création du dépôt...";
+
+
+        statusBox.style.display =
+            "block";
+
+
+        statusBox.textContent =
+            "Création de votre demande de dépôt...";
+
+
+        transactionBox.style.display =
+            "none";
+
+
+        try{
+
+            /*
+               IMPORTANT :
+
+               On crée d'abord le dépôt
+               dans la base.
+            */
+
+            const deposit =
+                await createDeposit(
+                    amount
+                );
+
+
+            if(
+                !deposit
+            ){
+
+                throw new Error(
+                    "La base n'a retourné aucune demande de dépôt."
+                );
+
+            }
+
+
+            console.log(
+                "Dépôt créé :",
+                deposit
+            );
+
+
+            /*
+               Afficher le numéro professionnel
+               si la fonction l'a retourné.
+            */
+
+            if(
+                deposit.professional_transaction_id
+            ){
+
+                transactionId.textContent =
+                    deposit.professional_transaction_id;
+
+                transactionBox.style.display =
+                    "block";
+
+            }
+
+
+            statusBox.textContent =
+                "Dépôt enregistré. Redirection vers le paiement...";
+
+
+            /*
+               Petite pause pour laisser le navigateur
+               afficher la confirmation.
+            */
+
+            setTimeout(
+                function(){
+
+                    /*
+                       Redirection vers WestPay.
+                    */
+
+                    window.location.href =
+                        PAYMENT_URL;
+
+                },
+                700
+            );
+
+
+        }catch(error){
+
+            console.error(
+                "Dépôt:",
+                error
+            );
+
+
+            let message =
+                error.message ||
+                "Impossible de créer le dépôt.";
+
+
+            /*
+               Messages propres.
+            */
+
+            const lower =
+                message.toLowerCase();
+
+
+            if(
+                lower.includes(
+                    "minimum"
+                )
+            ){
+
+                message =
+                    "Le dépôt minimum est de 3 000 XOF.";
+
+            }
+
+
+            if(
+                lower.includes(
+                    "utilisateur invalide"
+                )
+            ){
+
+                message =
+                    "Votre session utilisateur est invalide. Veuillez vous reconnecter.";
+
+            }
+
+
+            showError(
+                message
+            );
+
+
+            statusBox.style.display =
+                "none";
+
+
+            depositButton.disabled =
+                false;
+
+
+            depositButton.textContent =
+                "Continuer vers le paiement";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ENTER
+========================================================= */
+
+amountInput.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Enter"
+        ){
+
+            depositButton.click();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

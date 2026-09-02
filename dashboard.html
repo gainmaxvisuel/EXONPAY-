@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EXONPAY - Accueil</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #f5f6f8;
+    --white: #ffffff;
+    --dark: #111827;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding-bottom: 82px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+.header {
+    position: relative;
+    overflow: hidden;
+    background: var(--dark);
+    color: white;
+    padding: 24px 20px 82px;
+    border-radius: 0 0 28px 28px;
+}
+
+.background-logos {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: .055;
+}
+
+.background-logos img {
+    position: absolute;
+    width: 115px;
+    height: 115px;
+    object-fit: contain;
+}
+
+.logo-1 {
+    top: 5px;
+    left: 5%;
+    transform: rotate(-12deg);
+}
+
+.logo-2 {
+    top: 70px;
+    left: 43%;
+    transform: rotate(15deg);
+}
+
+.logo-3 {
+    top: -20px;
+    right: 4%;
+    transform: rotate(-18deg);
+}
+
+.logo-4 {
+    bottom: -35px;
+    left: 22%;
+    transform: rotate(20deg);
+}
+
+.logo-5 {
+    bottom: -20px;
+    right: 25%;
+    transform: rotate(-10deg);
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: auto;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 25px;
+}
+
+.brand img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.brand-name {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: .5px;
+}
+
+.welcome {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.phone {
+    margin-top: 9px;
+    font-size: 14px;
+    color: rgba(255,255,255,.75);
+}
+
+/* =========================
+   CONTENU
+   ========================= */
+
+.content {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    max-width: 900px;
+    margin: -48px auto 0;
+    padding: 0 18px;
+}
+
+/* =========================
+   SOLDES
+   ========================= */
+
+.balances {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.balance-card {
+    background: var(--white);
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.07);
+}
+
+.balance-label {
+    margin-bottom: 10px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.balance-value {
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.currency {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* =========================
+   ACTIONS
+   ========================= */
+
+.actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.action {
+    min-height: 76px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    color: var(--text);
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.action-icon {
+    position: relative;
+    width: 23px;
+    height: 23px;
+    border: 2px solid var(--dark);
+    border-radius: 6px;
+}
+
+.icon-reload::after {
+    content: "";
+    position: absolute;
+    right: -4px;
+    top: 2px;
+    width: 7px;
+    height: 7px;
+    border-top: 2px solid var(--dark);
+    border-right: 2px solid var(--dark);
+    transform: rotate(25deg);
+}
+
+.icon-withdraw::after {
+    content: "";
+    position: absolute;
+    left: 9px;
+    top: 3px;
+    width: 2px;
+    height: 13px;
+    background: var(--dark);
+}
+
+.icon-wheel {
+    border-radius: 50%;
+}
+
+.icon-wheel::before {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 7px;
+    width: 5px;
+    height: 5px;
+    border: 2px solid var(--dark);
+    border-radius: 50%;
+}
+
+/* =========================
+   SECTIONS
+   ========================= */
+
+.section {
+    margin-top: 24px;
+}
+
+.section-title {
+    margin-bottom: 11px;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.info-card {
+    overflow: hidden;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+
+.info-row:last-child {
+    border-bottom: 0;
+}
+
+.info-label {
+    color: var(--muted);
+}
+
+.info-value {
+    max-width: 60%;
+    text-align: right;
+    font-weight: 700;
+    word-break: break-word;
+}
+
+/* =========================
+   ROULETTE
+   ========================= */
+
+.wheel-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+
+    padding: 18px;
+
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+}
+
+.wheel-title {
+    margin-bottom: 5px;
+    font-weight: 800;
+}
+
+.wheel-description {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.wheel-count {
+    min-width: 56px;
+    height: 56px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f3f4f6;
+    border-radius: 50%;
+
+    font-size: 19px;
+    font-weight: 800;
+}
+
+/* =========================
+   NAVIGATION
+   ========================= */
+
+.bottom-nav {
+    position: fixed;
+    z-index: 100;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 72px;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    background: rgba(255,255,255,.97);
+    border-top: 1px solid var(--border);
+
+    backdrop-filter: blur(10px);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    color: #6b7280;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.nav-item.active {
+    color: var(--dark);
+}
+
+.nav-icon {
+    width: 20px;
+    height: 20px;
+
+    border: 1.8px solid currentColor;
+    border-radius: 5px;
+}
+
+.nav-team {
+    border-radius: 50%;
+}
+
+.nav-profile {
+    border-radius: 50%;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 600px) {
+
+    .balance-card {
+        padding: 16px;
+    }
+
+    .balance-value {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 360px) {
+
+    .actions {
+        gap: 7px;
+    }
+
+    .action {
+        font-size: 11px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =================================================
+     HEADER
+     ================================================= -->
+
+<header class="header">
+
+    <div class="background-logos">
+
+        <img class="logo-1" src="logo.png" alt="">
+        <img class="logo-2" src="logo.png" alt="">
+        <img class="logo-3" src="logo.png" alt="">
+        <img class="logo-4" src="logo.png" alt="">
+        <img class="logo-5" src="logo.png" alt="">
+
+    </div>
+
+    <div class="header-content">
+
+        <div class="brand">
+
+            <img src="logo.png" alt="EXONPAY">
+
+            <div class="brand-name">
+                EXONPAY
+            </div>
+
+        </div>
+
+        <div class="welcome">
+            Bienvenue
+        </div>
+
+        <div
+            id="phoneNumber"
+            class="phone"
+        >
+            Chargement...
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =================================================
+     CONTENU
+     ================================================= -->
+
+<main class="content">
+
+    <!-- SOLDES -->
+
+    <section class="balances">
+
+        <div class="balance-card">
+
+            <div class="balance-label">
+                Solde principal
+            </div>
+
+            <div
+                id="principalBalance"
+                class="balance-value"
+            >
+                0
+                <span class="currency">
+                    FCFA
+                </span>
+            </div>
+
+        </div>
+
+
+        <div class="balance-card">
+
+            <div class="balance-label">
+                Solde retrait
+            </div>
+
+            <div
+                id="withdrawalBalance"
+                class="balance-value"
+            >
+                0
+                <span class="currency">
+                    FCFA
+                </span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ACTIONS -->
+
+    <section class="actions">
+
+        <a
+            href="deposit.html"
+            class="action"
+        >
+
+            <span
+                class="action-icon icon-reload"
+            ></span>
+
+            <span>
+                Recharger
+            </span>
+
+        </a>
+
+
+        <a
+            href="withdraw.html"
+            class="action"
+        >
+
+            <span
+                class="action-icon icon-withdraw"
+            ></span>
+
+            <span>
+                Retirer
+            </span>
+
+        </a>
+
+
+        <a
+            href="wheel.html"
+            class="action"
+        >
+
+            <span
+                class="action-icon icon-wheel"
+            ></span>
+
+            <span>
+                Roulette
+            </span>
+
+        </a>
+
+    </section>
+
+
+    <!-- INFORMATIONS -->
+
+    <section class="section">
+
+        <div class="section-title">
+            Informations du compte
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Identifiant
+                </span>
+
+                <span
+                    id="professionalId"
+                    class="info-value"
+                >
+                    --
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Pays
+                </span>
+
+                <span
+                    id="countryName"
+                    class="info-value"
+                >
+                    --
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Produits actifs
+                </span>
+
+                <span
+                    id="productCount"
+                    class="info-value"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Statut
+                </span>
+
+                <span
+                    id="accountStatus"
+                    class="info-value"
+                >
+                    --
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- TOURS DISPONIBLES -->
+
+    <section class="section">
+
+        <div class="section-title">
+            Roulette
+        </div>
+
+
+        <div class="wheel-card">
+
+            <div>
+
+                <div class="wheel-title">
+                    Tours disponibles
+                </div>
+
+                <div class="wheel-description">
+                    Nombre de tours actuellement utilisables.
+                </div>
+
+            </div>
+
+
+            <div
+                id="spinCount"
+                class="wheel-count"
+            >
+                0
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =================================================
+     NAVIGATION
+     ================================================= -->
+
+<nav class="bottom-nav">
+
+    <a
+        href="dashboard.html"
+        class="nav-item active"
+    >
+
+        <span class="nav-icon"></span>
+
+        <span>
+            Accueil
+        </span>
+
+    </a>
+
+
+    <a
+        href="products.html"
+        class="nav-item"
+    >
+
+        <span class="nav-icon"></span>
+
+        <span>
+            Produit
+        </span>
+
+    </a>
+
+
+    <a
+        href="team.html"
+        class="nav-item"
+    >
+
+        <span class="nav-icon nav-team"></span>
+
+        <span>
+            Équipe
+        </span>
+
+    </a>
+
+
+    <a
+        href="profile.html"
+        class="nav-item"
+    >
+
+        <span class="nav-icon nav-profile"></span>
+
+        <span>
+            Profil
+        </span>
+
+    </a>
+
+</nav>
+
+
+<script>
+
+/*
+=========================================================
+CONFIGURATION SUPABASE
+=========================================================
+
+UTILISER EXACTEMENT LES MÊMES VALEURS QUE login.html
+=========================================================
+*/
+
+const SUPABASE_URL =
+    "https://euyvppbbhjrjcbgmdian.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1eXZwcGJiaGpyamNiZ21kaWFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMjIxNjYsImV4cCI6MjEwMzY5ODE2Nn0.BOH9ZGx5I34wzIkl8oGU7_BZ8yN3zWZSqIrBceb6aH0";
+
+
+/*
+=========================================================
+SESSION UTILISATEUR
+=========================================================
+*/
+
+const savedUser =
+    localStorage.getItem(
+        "exonpay_user"
+    );
+
+
+if (!savedUser) {
+
+    window.location.replace(
+        "login.html"
+    );
+
+}
+
+
+let sessionUser;
+
+try {
+
+    sessionUser =
+        JSON.parse(savedUser);
+
+} catch {
+
+    localStorage.removeItem(
+        "exonpay_user"
+    );
+
+    window.location.replace(
+        "login.html"
+    );
+
+}
+
+
+/*
+=========================================================
+HEADERS
+=========================================================
+*/
+
+function getHeaders() {
+
+    return {
+
+        "apikey":
+            SUPABASE_ANON_KEY,
+
+        "Authorization":
+            "Bearer " +
+            SUPABASE_ANON_KEY,
+
+        "Accept":
+            "application/json"
+
+    };
+
+}
+
+
+/*
+=========================================================
+FORMAT FCFA
+=========================================================
+*/
+
+function formatMoney(value) {
+
+    return Number(
+        value || 0
+    ).toLocaleString(
+        "fr-FR",
+        {
+            maximumFractionDigits: 0
+        }
+    );
+
+}
+
+
+/*
+=========================================================
+AFFICHAGE SESSION
+=========================================================
+*/
+
+document.getElementById(
+    "professionalId"
+).textContent =
+    sessionUser.professional_id || "--";
+
+
+document.getElementById(
+    "countryName"
+).textContent =
+    sessionUser.country_name || "--";
+
+
+document.getElementById(
+    "accountStatus"
+).textContent =
+
+    sessionUser.is_active === false
+        ? "Désactivé"
+        : "Actif";
+
+
+document.getElementById(
+    "phoneNumber"
+).textContent =
+
+    sessionUser.dial_code
+        ? sessionUser.dial_code +
+          " " +
+          sessionUser.phone_number
+        : sessionUser.phone_number || "--";
+
+
+/*
+=========================================================
+WALLET
+=========================================================
+*/
+
+async function loadWallet() {
+
+    const userId =
+        sessionUser.user_id;
+
+
+    if (!userId) {
+        return;
+    }
+
+
+    const url =
+        SUPABASE_URL +
+        "/rest/v1/wallets" +
+        "?select=principal_balance,withdrawal_balance" +
+        "&user_id=eq." +
+        encodeURIComponent(userId) +
+        "&limit=1";
+
+
+    const response =
+        await fetch(
+            url,
+            {
+                headers:
+                    getHeaders()
+            }
+        );
+
+
+    if (!response.ok) {
+
+        console.error(
+            "Erreur wallet:",
+            await response.text()
+        );
+
+        return;
+    }
+
+
+    const data =
+        await response.json();
+
+
+    if (
+        !Array.isArray(data) ||
+        data.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    const wallet =
+        data[0];
+
+
+    document.getElementById(
+        "principalBalance"
+    ).innerHTML =
+
+        formatMoney(
+            wallet.principal_balance
+        ) +
+
+        ' <span class="currency">FCFA</span>';
+
+
+    document.getElementById(
+        "withdrawalBalance"
+    ).innerHTML =
+
+        formatMoney(
+            wallet.withdrawal_balance
+        ) +
+
+        ' <span class="currency">FCFA</span>';
+
+}
+
+
+/*
+=========================================================
+PRODUITS
+=========================================================
+*/
+
+async function loadProducts() {
+
+    const userId =
+        sessionUser.user_id;
+
+
+    if (!userId) {
+        return;
+    }
+
+
+    const url =
+        SUPABASE_URL +
+        "/rest/v1/user_products" +
+        "?select=id,status" +
+        "&user_id=eq." +
+        encodeURIComponent(userId);
+
+
+    const response =
+        await fetch(
+            url,
+            {
+                headers:
+                    getHeaders()
+            }
+        );
+
+
+    if (!response.ok) {
+
+        console.error(
+            "Erreur produits:",
+            await response.text()
+        );
+
+        return;
+
+    }
+
+
+    const data =
+        await response.json();
+
+
+    if (!Array.isArray(data)) {
+        return;
+    }
+
+
+    const activeProducts =
+        data.filter(
+            product =>
+                product.status === "active"
+        );
+
+
+    document.getElementById(
+        "productCount"
+    ).textContent =
+        activeProducts.length;
+
+}
+
+
+/*
+=========================================================
+TOURS DISPONIBLES
+=========================================================
+
+IMPORTANT :
+
+On utilise UNIQUEMENT :
+
+wheel_balances.available_spins
+
+Il ne s'agit pas de wheel_spin_grants.
+Il ne s'agit pas des récompenses.
+Il ne s'agit pas de l'historique des tours.
+
+Cette valeur représente le nombre de tours actuellement
+disponibles pour l'utilisateur.
+=========================================================
+*/
+
+async function loadAvailableSpins() {
+
+    const userId =
+        sessionUser.user_id;
+
+
+    if (!userId) {
+        return;
+    }
+
+
+    const url =
+        SUPABASE_URL +
+        "/rest/v1/wheel_balances" +
+        "?select=available_spins" +
+        "&user_id=eq." +
+        encodeURIComponent(userId) +
+        "&limit=1";
+
+
+    try {
+
+        const response =
+            await fetch(
+                url,
+                {
+                    method: "GET",
+                    headers:
+                        getHeaders()
+                }
+            );
+
+
+        if (!response.ok) {
+
+            console.error(
+                "Erreur récupération tours:",
+                await response.text()
+            );
+
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        /*
+        Aucun solde roulette enregistré
+        */
+
+        if (
+            !Array.isArray(data) ||
+            data.length === 0
+        ) {
+
+            document.getElementById(
+                "spinCount"
+            ).textContent = "0";
+
+            return;
+        }
+
+
+        /*
+        VALEUR REELLE DES TOURS DISPONIBLES
+        */
+
+        const availableSpins =
+            Number(
+                data[0].available_spins || 0
+            );
+
+
+        document.getElementById(
+            "spinCount"
+        ).textContent =
+            availableSpins;
+
+
+    } catch (error) {
+
+        console.error(
+            "Erreur tours:",
+            error
+        );
+
+    }
+
+}
+
+
+/*
+=========================================================
+CHARGEMENT DU DASHBOARD
+=========================================================
+*/
+
+async function loadDashboard() {
+
+    await Promise.allSettled([
+
+        loadWallet(),
+
+        loadProducts(),
+
+        loadAvailableSpins()
+
+    ]);
+
+}
+
+
+/*
+=========================================================
+PREMIER CHARGEMENT
+=========================================================
+*/
+
+loadDashboard();
+
+
+/*
+=========================================================
+ACTUALISATION AUTOMATIQUE
+=========================================================
+
+Toutes les 30 secondes :
+- soldes
+- produits
+- tours disponibles
+=========================================================
+*/
+
+setInterval(
+    loadDashboard,
+    30000
+);
+
+</script>
+
+</body>
+</html>

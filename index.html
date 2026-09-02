@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXONPAY - Inscription</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background:
+        linear-gradient(rgba(245,246,248,.93), rgba(245,246,248,.93)),
+        url("logo.png") center/420px auto no-repeat fixed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 460px;
+      background: white;
+      border-radius: 22px;
+      padding: 30px;
+      box-shadow: 0 15px 45px rgba(0,0,0,.10);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .logo img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+    }
+
+    h1 {
+      margin: 10px 0 5px;
+      font-size: 28px;
+      color: #111827;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .field {
+      margin-bottom: 17px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    input,
+    select {
+      width: 100%;
+      height: 48px;
+      padding: 0 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 11px;
+      font-size: 15px;
+      outline: none;
+      background: white;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #111827;
+    }
+
+    .phone {
+      display: grid;
+      grid-template-columns: 95px 1fr;
+      gap: 8px;
+    }
+
+    #prefix {
+      text-align: center;
+      background: #f9fafb;
+      font-weight: 700;
+    }
+
+    .hint {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .ref-found {
+      display: none;
+      margin-top: 7px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #f0fdf4;
+      color: #166534;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    button {
+      width: 100%;
+      height: 50px;
+      border: 0;
+      border-radius: 11px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    #message {
+      min-height: 22px;
+      margin: 14px 0 0;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .error {
+      color: #dc2626;
+    }
+
+    .success {
+      color: #15803d;
+    }
+
+    .login {
+      margin-top: 22px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+      text-align: center;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .login a {
+      color: #111827;
+      font-weight: 800;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div class="logo">
+    <img src="logo.png" alt="EXONPAY">
+    <h1>Créer un compte</h1>
+    <p class="subtitle">Rejoignez EXONPAY</p>
+  </div>
+
+  <form id="registerForm">
+
+    <div class="field">
+      <label for="country">Pays</label>
+
+      <select id="country" required>
+        <option value="">Sélectionner un pays</option>
+        <option value="BF">🇧🇫 Burkina Faso</option>
+        <option value="BJ">🇧🇯 Bénin</option>
+        <option value="CI">🇨🇮 Côte d’Ivoire</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="phone">Numéro de téléphone</label>
+
+      <div class="phone">
+        <input id="prefix" type="text" value="+226" readonly>
+        <input
+          id="phone"
+          type="tel"
+          inputmode="numeric"
+          placeholder="76930551"
+          required
+        >
+      </div>
+
+      <span class="hint">
+        Entrez uniquement votre numéro national.
+      </span>
+    </div>
+
+    <div class="field">
+      <label for="password">Mot de passe</label>
+
+      <input
+        id="password"
+        type="password"
+        minlength="6"
+        placeholder="Minimum 6 caractères"
+        required
+      >
+    </div>
+
+    <div class="field">
+      <label for="confirmPassword">
+        Confirmer le mot de passe
+      </label>
+
+      <input
+        id="confirmPassword"
+        type="password"
+        placeholder="Répétez le mot de passe"
+        required
+      >
+    </div>
+
+    <div class="field">
+      <label for="referral">
+        Code de parrainage
+        <span style="font-weight:400;color:#6b7280">
+          (facultatif)
+        </span>
+      </label>
+
+      <input
+        id="referral"
+        type="text"
+        placeholder="Ex. 21871846"
+        autocomplete="off"
+      >
+
+      <div id="refFound" class="ref-found">
+        ✓ Code de parrainage récupéré depuis le lien d'invitation.
+      </div>
+    </div>
+
+    <button id="submitBtn" type="submit">
+      Créer mon compte
+    </button>
+
+    <p id="message"></p>
+
+  </form>
+
+  <div class="login">
+    Vous avez déjà un compte ?
+    <a href="login.html">Se connecter</a>
+  </div>
+
+</div>
+
+
+<script>
+
+/*
+=========================================================
+SUPABASE
+=========================================================
+
+CONSERVE ICI TES DEUX VALEURS ACTUELLES.
+=========================================================
+*/
+
+const SUPABASE_URL =
+  "https://euyvppbbhjrjcbgmdian.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1eXZwcGJiaGpyamNiZ21kaWFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMjIxNjYsImV4cCI6MjEwMzY5ODE2Nn0.BOH9ZGx5I34wzIkl8oGU7_BZ8yN3zWZSqIrBceb6aH0";
+
+
+/*
+=========================================================
+PAYS
+=========================================================
+*/
+
+const COUNTRY_IDS = {
+
+  BF: "fe960700-b784-4fd8-a711-8a4da759d32a",
+
+  BJ: "39a77a1e-ba54-47aa-ab77-653e326ef80f",
+
+  CI: "ff94227b-8a5a-43b2-8db0-3a39babef434"
+
+};
+
+
+const PREFIXES = {
+
+  BF: "+226",
+
+  BJ: "+229",
+
+  CI: "+225"
+
+};
+
+
+/*
+=========================================================
+ELEMENTS
+=========================================================
+*/
+
+const form =
+  document.getElementById("registerForm");
+
+const country =
+  document.getElementById("country");
+
+const prefix =
+  document.getElementById("prefix");
+
+const phone =
+  document.getElementById("phone");
+
+const password =
+  document.getElementById("password");
+
+const confirmPassword =
+  document.getElementById("confirmPassword");
+
+const referral =
+  document.getElementById("referral");
+
+const refFound =
+  document.getElementById("refFound");
+
+const submitBtn =
+  document.getElementById("submitBtn");
+
+const message =
+  document.getElementById("message");
+
+
+/*
+=========================================================
+PARRAINAGE AUTOMATIQUE
+
+Accepte :
+
+index.html?ref=21871846
+
+index.html?referral=21871846
+
+index.html?referral_code=21871846
+=========================================================
+*/
+
+const params =
+  new URLSearchParams(window.location.search);
+
+const invitationCode =
+  params.get("ref") ||
+  params.get("referral") ||
+  params.get("referral_code");
+
+
+if (invitationCode) {
+
+  referral.value =
+    invitationCode.trim();
+
+  refFound.style.display =
+    "block";
+}
+
+
+/*
+=========================================================
+PAYS
+=========================================================
+*/
+
+country.addEventListener("change", () => {
+
+  prefix.value =
+    PREFIXES[country.value] || "+226";
+
+});
+
+
+/*
+=========================================================
+MESSAGE
+=========================================================
+*/
+
+function showMessage(text, type) {
+
+  message.textContent = text;
+
+  message.className = type || "";
+
+}
+
+
+/*
+=========================================================
+INSCRIPTION
+=========================================================
+*/
+
+form.addEventListener("submit", async (event) => {
+
+  event.preventDefault();
+
+
+  showMessage("");
+
+
+  const countryCode =
+    country.value;
+
+  const countryId =
+    COUNTRY_IDS[countryCode];
+
+  const phoneNumber =
+    phone.value.trim();
+
+  const passwordValue =
+    password.value;
+
+  const confirmValue =
+    confirmPassword.value;
+
+  const referralCode =
+    referral.value.trim();
+
+
+  /*
+  -----------------------------------------------
+  VALIDATIONS
+  -----------------------------------------------
+  */
+
+  if (!countryId) {
+
+    showMessage(
+      "Veuillez sélectionner un pays.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if (!/^[0-9]+$/.test(phoneNumber)) {
+
+    showMessage(
+      "Numéro de téléphone invalide.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if (passwordValue.length < 6) {
+
+    showMessage(
+      "Le mot de passe doit contenir au moins 6 caractères.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if (passwordValue !== confirmValue) {
+
+    showMessage(
+      "Les deux mots de passe ne correspondent pas.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  /*
+  -----------------------------------------------
+  BOUTON
+  -----------------------------------------------
+  */
+
+  submitBtn.disabled = true;
+
+  submitBtn.textContent =
+    "Création du compte…";
+
+
+  try {
+
+    /*
+    ===============================================
+    APPEL DIRECT DE register_user
+    ===============================================
+    */
+
+    const response = await fetch(
+
+      SUPABASE_URL +
+      "/rest/v1/rpc/register_user",
+
+      {
+
+        method: "POST",
+
+        headers: {
+
+          "Content-Type":
+            "application/json",
+
+          "apikey":
+            SUPABASE_ANON_KEY,
+
+          "Authorization":
+            "Bearer " +
+            SUPABASE_ANON_KEY,
+
+          "Accept":
+            "application/json"
+
+        },
+
+        body: JSON.stringify({
+
+          p_country_id:
+            countryId,
+
+          p_phone_number:
+            phoneNumber,
+
+          p_password:
+            passwordValue,
+
+          p_referral_code:
+            referralCode || null
+
+        })
+
+      }
+
+    );
+
+
+    /*
+    ===============================================
+    LECTURE REPONSE
+    ===============================================
+    */
+
+    const raw =
+      await response.text();
+
+
+    let data = null;
+
+    try {
+
+      data =
+        raw ? JSON.parse(raw) : null;
+
+    } catch {
+
+      data = null;
+
+    }
+
+
+    /*
+    ===============================================
+    ERREUR SUPABASE
+    ===============================================
+    */
+
+    if (!response.ok) {
+
+      console.error(
+        "Supabase:",
+        raw
+      );
+
+
+      let errorText =
+        "Impossible de créer le compte.";
+
+
+      if (data) {
+
+        errorText =
+          data.message ||
+          data.details ||
+          data.hint ||
+          data.error ||
+          errorText;
+
+      }
+
+
+      throw new Error(errorText);
+
+    }
+
+
+    /*
+    ===============================================
+    SUCCÈS
+    ===============================================
+    */
+
+    console.log(
+      "Inscription réussie :",
+      data
+    );
+
+
+    showMessage(
+      "Compte créé avec succès. Redirection…",
+      "success"
+    );
+
+
+    /*
+    ===============================================
+    DASHBOARD
+    ===============================================
+
+    Redirection seulement après une réponse
+    HTTP 200 de Supabase.
+    ===============================================
+    */
+
+    setTimeout(() => {
+
+      window.location.assign(
+        "./dashboard.html"
+      );
+
+    }, 1000);
+
+
+  } catch (error) {
+
+    console.error(
+      "Erreur inscription :",
+      error
+    );
+
+
+    showMessage(
+      error.message ||
+      "Impossible de créer le compte.",
+      "error"
+    );
+
+
+    submitBtn.disabled = false;
+
+    submitBtn.textContent =
+      "Créer mon compte";
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>

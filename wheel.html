@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>EXONPAY - Roulette</title>
+<style>
+*{box-sizing:border-box}
+:root{--dark:#111827;--bg:#f4f6f8;--white:#fff;--muted:#6b7280;--border:#e5e7eb;--green:#15803d;--gold:#f59e0b}
+body{margin:0;background:var(--bg);color:#1f2937;font-family:Arial,Helvetica,sans-serif;padding-bottom:82px}
+.header{background:var(--dark);color:#fff;padding:22px 18px 72px;border-radius:0 0 28px 28px;position:relative;overflow:hidden}
+.header:after{content:'EXONPAY';position:absolute;right:-18px;bottom:-12px;font-size:70px;font-weight:900;opacity:.035;transform:rotate(-8deg)}
+.header-inner{max-width:650px;margin:auto;position:relative;z-index:2}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:22px}.brand img{width:40px;height:40px;border-radius:10px;object-fit:contain}.brand-name{font-weight:900;letter-spacing:.5px}
+.title{font-size:26px;font-weight:900}.subtitle{font-size:14px;color:rgba(255,255,255,.72);margin-top:7px}
+.content{max-width:650px;margin:-38px auto 0;padding:0 15px;position:relative;z-index:3}
+.card{background:#fff;border:1px solid var(--border);border-radius:20px;box-shadow:0 8px 26px rgba(0,0,0,.06)}
+.balance{padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.balance-box{background:#f8fafc;border-radius:14px;padding:13px}.balance-label{font-size:10px;color:var(--muted);font-weight:800}.balance-value{font-size:19px;font-weight:900;margin-top:5px}.balance-value small{font-size:11px}
+.game{margin-top:14px;padding:18px 14px 22px;text-align:center}
+.section-title{font-size:18px;font-weight:900}.hint{font-size:12px;color:var(--muted);margin:6px 0 18px}
+.machine{width:min(360px,94vw);margin:0 auto;background:#111827;border-radius:22px;padding:10px;box-shadow:0 12px 28px rgba(0,0,0,.17)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:#0b1220;padding:8px;border-radius:16px}
+.cell{position:relative;min-height:92px;border-radius:13px;background:#fff;border:2px solid #e5e7eb;display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden;transition:transform .12s,box-shadow .12s,border-color .12s,background .12s}
+.cell .amount{font-size:17px;font-weight:900;color:#111827}.cell .unit{font-size:9px;color:#6b7280;margin-top:3px;font-weight:700}
+.cell.active{background:#fff;border-color:#fff;transform:scale(1.035);box-shadow:0 0 0 3px rgba(255,255,255,.9),0 0 24px 7px rgba(255,255,255,.95);z-index:3}
+.cell.active:after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,.95) 48%,transparent 72%);animation:sweep .24s linear}
+@keyframes sweep{from{transform:translateX(-120%)}to{transform:translateX(120%)}}
+.center-cell{background:#111827;border-color:#374151;color:#fff}
+.center-cell .spin-mini{font-size:11px;font-weight:900;line-height:1.25}
+.center-cell .star{font-size:22px;margin-bottom:3px}
+.center-cell.active{background:#111827;border-color:#fff;box-shadow:0 0 0 3px #fff,0 0 24px 7px rgba(255,255,255,.95)}
+.machine-label{color:rgba(255,255,255,.7);font-size:10px;font-weight:800;padding:9px 2px 2px;letter-spacing:.5px}
+.spin-btn{margin-top:18px;width:100%;max-width:360px;border:0;border-radius:14px;background:var(--dark);color:#fff;padding:15px;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 7px 15px rgba(17,24,39,.2)}
+.spin-btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+.status{min-height:20px;margin-top:10px;font-size:12px;font-weight:700;color:var(--muted)}.status.error{color:#b91c1c}.status.success{color:var(--green)}
+.result{display:none;margin-top:14px;padding:16px;border-radius:15px;background:#f0fdf4;border:1px solid #bbf7d0}.result.show{display:block}
+.result .amount{font-size:28px;font-weight:900;color:var(--green);margin-top:4px}.result p{margin:5px 0 0;font-size:12px;color:#166534}
+.rewards{margin-top:14px;padding:17px}.rewards-title{font-size:16px;font-weight:900;margin-bottom:12px}
+.reward-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.reward{padding:11px 5px;border-radius:12px;background:#f8fafc;border:1px solid var(--border);font-weight:900;font-size:13px;text-align:center}
+.reward small{display:block;color:var(--muted);font-size:9px;margin-top:3px}
+.info{margin-top:14px;padding:15px;font-size:12px;color:var(--muted);line-height:1.55}.info strong{color:#374151}
+.bottom-nav{position:fixed;z-index:100;left:0;right:0;bottom:0;height:72px;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.97);border-top:1px solid var(--border);backdrop-filter:blur(10px)}
+.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#6b7280;text-decoration:none;font-size:11px;font-weight:700}.nav-item.active{color:var(--dark)}
+.nav-icon{width:20px;height:20px;border:1.8px solid currentColor;border-radius:5px}.nav-round{border-radius:50%}
+@media(max-width:360px){.cell{min-height:78px}.cell .amount{font-size:14px}.balance-value{font-size:16px}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <div class="brand"><img src="logo.png" alt="EXONPAY"><div class="brand-name">EXONPAY</div></div>
+    <div class="title">Roulette</div>
+    <div class="subtitle">Tournez et tentez de gagner une récompense.</div>
+  </div>
+</header>
+
+<main class="content">
+  <section class="card balance">
+    <div class="balance-box"><div class="balance-label">TOURS DISPONIBLES</div><div id="spins" class="balance-value">—</div></div>
+    <div class="balance-box"><div class="balance-label">SOLDE RETRAIT</div><div id="wallet" class="balance-value">— <small>FCFA</small></div></div>
+  </section>
+
+  <section class="card game">
+    <div class="section-title">Machine à sous</div>
+    <div class="hint">La lumière blanche parcourt les cases puis s'arrête sur votre gain.</div>
+
+    <div class="machine">
+      <div id="grid" class="grid"></div>
+      <div class="machine-label">EXONPAY • ROULETTE DE LA CHANCE</div>
+    </div>
+
+    <button id="spinBtn" class="spin-btn">TOURNER</button>
+    <div id="status" class="status"></div>
+
+    <div id="result" class="result">
+      <div>🎉 Félicitations !</div>
+      <div id="resultAmount" class="amount">0 FCFA</div>
+      <p>Votre récompense a été créditée sur votre solde retrait.</p>
+    </div>
+  </section>
+
+  <section class="card rewards">
+    <div class="rewards-title">Récompenses disponibles</div>
+    <div id="rewardGrid" class="reward-grid"></div>
+  </section>
+
+  <section class="card info">
+    <strong>Comment ça marche ?</strong><br>
+    Un tour disponible est consommé lorsque vous lancez la roulette. Le serveur EXONPAY choisit la récompense et crédite automatiquement le gain. L'animation à l'écran reproduit ensuite le parcours lumineux de la machine.
+  </section>
+</main>
+
+<nav class="bottom-nav">
+  <a class="nav-item" href="dashboard.html"><span class="nav-icon"></span>Accueil</a>
+  <a class="nav-item" href="products.html"><span class="nav-icon"></span>Produits</a>
+  <a class="nav-item active" href="roulette.html"><span class="nav-icon nav-round"></span>Roulette</a>
+  <a class="nav-item" href="profile.html"><span class="nav-icon nav-round"></span>Profil</a>
+</nav>
+
+<script>
+const SUPABASE_URL="https://euyvppbbhjrjcbgmdian.supabase.co";
+const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1eXZwcGJiaGpyamNiZ21kaWFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMjIxNjYsImV4cCI6MjEwMzY5ODE2Nn0.BOH9ZGx5I34wzIkl8oGU7_BZ8yN3zWZSqIrBceb6aH0";
+const saved=localStorage.getItem("exonpay_user");
+if(!saved){location.replace("login.html");throw new Error("Session absente");}
+let session;try{session=JSON.parse(saved)}catch(e){localStorage.removeItem("exonpay_user");location.replace("login.html");throw e}
+const userId=session.user_id;
+const headers={apikey:SUPABASE_ANON_KEY,Authorization:"Bearer "+SUPABASE_ANON_KEY,Accept:"application/json","Content-Type":"application/json"};
+const $=id=>document.getElementById(id);
+let rewards=[],cells=[],busy=false,currentIndex=-1;
+
+function money(v){return new Intl.NumberFormat("fr-FR").format(Number(v||0))+" FCFA"}
+async function api(path,opts={}){
+  const r=await fetch(SUPABASE_URL+path,{...opts,headers:{...headers,...(opts.headers||{})}});
+  const text=await r.text();let data;try{data=JSON.parse(text)}catch{data=text}
+  if(!r.ok)throw new Error(data?.message||data?.error_description||data?.hint||data?.details||data?.error||text||"Erreur serveur");
+  return data;
+}
+
+/* Parcours de la lumière autour des 8 cases, avec le centre réservé au bouton visuel. */
+const pathOrder=[0,1,2,5,8,7,6,3];
+
+function render(){
+  const grid=$("grid");grid.innerHTML="";cells=[];
+  for(let i=0;i<9;i++){
+    const el=document.createElement("div");el.className="cell";
+    if(i===4){
+      el.classList.add("center-cell");
+      el.innerHTML='<div class="star">★</div><div class="spin-mini">TOURNEZ<br>ICI</div>';
+    }else{
+      const rewardIndex=pathOrder.indexOf(i);
+      const r=rewards[rewardIndex];
+      el.dataset.rewardIndex=rewardIndex;
+      el.innerHTML=`<div class="amount">${r?Number(r.amount).toLocaleString("fr-FR"):"—"}</div><div class="unit">FCFA</div>`;
+    }
+    grid.appendChild(el);cells.push(el);
+  }
+  $("rewardGrid").innerHTML=rewards.map(r=>`<div class="reward">${money(r.amount)}<small>récompense</small></div>`).join("");
+}
+function clearActive(){cells.forEach(c=>c.classList.remove("active"))}
+function light(i){clearActive();if(cells[i])cells[i].classList.add("active");currentIndex=i}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
+
+async function animateToReward(rewardIndex){
+  const targetCell=pathOrder[rewardIndex];
+  /* Plusieurs tours comme une vraie machine, puis ralentissement progressif. */
+  let total=0;
+  const rounds=5;
+  for(let round=0;round<rounds;round++){
+    for(let p=0;p<pathOrder.length;p++){
+      const cellIndex=pathOrder[p];
+      light(cellIndex);
+      total++;
+      let delay=round<2?65:round<4?95:130;
+      if(round===rounds-1){
+        const distance=(p-rewardIndex+pathOrder.length)%pathOrder.length;
+        delay=150+distance*42;
+      }
+      await sleep(delay);
+    }
+  }
+  /* Dernier passage précis jusqu'à la case gagnante. */
+  const startPos=pathOrder.indexOf(targetCell);
+  for(let step=0;step<=startPos;step++){
+    light(pathOrder[step]);
+    await sleep(185+step*45);
+  }
+  light(targetCell);
+  await sleep(650);
+}
+
+async function load(){
+  try{
+    const [rw,wb,wal]=await Promise.all([
+      api("/rest/v1/wheel_rewards?select=id,amount,display_order&is_active=eq.true&order=display_order.asc"),
+      api(`/rest/v1/wheel_balances?select=available_spins&user_id=eq.${encodeURIComponent(userId)}`),
+      api(`/rest/v1/wallets?select=withdrawal_balance&user_id=eq.${encodeURIComponent(userId)}`)
+    ]);
+    rewards=rw||[];
+    render();
+    $("spins").textContent=wb?.[0]?.available_spins??0;
+    $("wallet").innerHTML=money(wal?.[0]?.withdrawal_balance??0).replace(" FCFA"," <small>FCFA</small>");
+  }catch(e){
+    $("status").textContent=e.message;
+    $("status").className="status error";
+  }
+}
+
+async function spin(){
+  if(busy)return;
+  const available=Number($("spins").textContent||0);
+  if(available<=0){
+    $("status").textContent="Vous n'avez aucun tour disponible.";
+    $("status").className="status error";return;
+  }
+  if(rewards.length!==9){
+    $("status").textContent="Les récompenses de la roulette ne sont pas correctement configurées.";
+    $("status").className="status error";return;
+  }
+  busy=true;$("spinBtn").disabled=true;$("status").textContent="La machine tourne…";
+  $("status").className="status";$("result").classList.remove("show");
+
+  try{
+    /* Le résultat est obtenu du serveur AVANT l'animation. */
+    const data=await api("/rest/v1/rpc/spin_wheel",{method:"POST",body:JSON.stringify({p_user_id:userId})});
+    const result=Array.isArray(data)?data[0]:data;
+    if(!result)throw new Error("Réponse invalide du serveur");
+
+    const reward=Number(result.reward_amount);
+    const rewardIndex=rewards.findIndex(r=>String(r.id)===String(result.reward_id));
+    if(rewardIndex<0)throw new Error("Récompense reçue introuvable dans la liste.");
+
+    await animateToReward(rewardIndex);
+
+    $("spins").textContent=result.remaining_spins??Math.max(0,available-1);
+    $("wallet").innerHTML=money(result.withdrawal_balance).replace(" FCFA"," <small>FCFA</small>");
+    $("resultAmount").textContent=money(reward);
+    $("result").classList.add("show");
+    $("status").textContent="Récompense créditée avec succès.";
+    $("status").className="status success";
+  }catch(e){
+    clearActive();
+    $("status").textContent=e.message;
+    $("status").className="status error";
+  }finally{
+    busy=false;$("spinBtn").disabled=false;
+  }
+}
+$("spinBtn").addEventListener("click",spin);
+load();
+</script>
+</body>
+</html>

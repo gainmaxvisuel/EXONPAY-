@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXONPAY - Connexion</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+
+      background:
+        linear-gradient(
+          rgba(245,246,248,.94),
+          rgba(245,246,248,.94)
+        ),
+        url("logo.png") center/420px auto no-repeat fixed;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 450px;
+      background: #fff;
+      padding: 32px;
+      border-radius: 22px;
+      box-shadow: 0 15px 45px rgba(0,0,0,.10);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .logo img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      color: #111827;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    select,
+    input {
+      width: 100%;
+      height: 48px;
+      border: 1px solid #d1d5db;
+      border-radius: 11px;
+      padding: 0 14px;
+      font-size: 15px;
+      outline: none;
+      background: white;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: #111827;
+      box-shadow: 0 0 0 3px rgba(17,24,39,.08);
+    }
+
+    .phone-row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 8px;
+    }
+
+    #prefix {
+      text-align: center;
+      font-weight: 700;
+      background: #f9fafb;
+    }
+
+    button {
+      width: 100%;
+      height: 50px;
+      border: 0;
+      border-radius: 11px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    #message {
+      min-height: 22px;
+      margin: 14px 0 0;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .error {
+      color: #dc2626;
+    }
+
+    .success {
+      color: #15803d;
+    }
+
+    .bottom {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+      text-align: center;
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .bottom a {
+      color: #111827;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 25px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+
+    <div class="logo">
+      <img src="logo.png" alt="EXONPAY">
+
+      <h1>Connexion</h1>
+
+      <div class="subtitle">
+        Connectez-vous à votre compte EXONPAY
+      </div>
+    </div>
+
+
+    <form id="loginForm">
+
+      <!-- PAYS -->
+      <div class="field">
+
+        <label for="country">
+          Pays
+        </label>
+
+        <select id="country" required>
+
+          <option value="">
+            Sélectionner un pays
+          </option>
+
+          <option value="BF">
+            🇧🇫 Burkina Faso
+          </option>
+
+          <option value="BJ">
+            🇧🇯 Bénin
+          </option>
+
+          <option value="CI">
+            🇨🇮 Côte d’Ivoire
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- TELEPHONE -->
+      <div class="field">
+
+        <label for="phone">
+          Numéro de téléphone
+        </label>
+
+        <div class="phone-row">
+
+          <input
+            id="prefix"
+            type="text"
+            value="+226"
+            readonly
+          >
+
+          <input
+            id="phone"
+            type="tel"
+            inputmode="numeric"
+            placeholder="76930551"
+            autocomplete="tel"
+            required
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- MOT DE PASSE -->
+      <div class="field">
+
+        <label for="password">
+          Mot de passe
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          placeholder="Votre mot de passe"
+          autocomplete="current-password"
+          required
+        >
+
+      </div>
+
+
+      <button
+        id="loginButton"
+        type="submit"
+      >
+        Se connecter
+      </button>
+
+
+      <div id="message"></div>
+
+    </form>
+
+
+    <div class="bottom">
+
+      Vous n'avez pas encore de compte ?
+
+      <a href="index.html">
+        Créer un compte
+      </a>
+
+    </div>
+
+  </div>
+
+
+<script>
+
+/*
+========================================================
+SUPABASE
+========================================================
+
+UTILISE EXACTEMENT LES MÊMES VALEURS QUE DANS index.html
+========================================================
+*/
+
+const SUPABASE_URL =
+  "https://euyvppbbhjrjcbgmdian.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1eXZwcGJiaGpyamNiZ21kaWFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMjIxNjYsImV4cCI6MjEwMzY5ODE2Nn0.BOH9ZGx5I34wzIkl8oGU7_BZ8yN3zWZSqIrBceb6aH0";
+
+
+/*
+========================================================
+INDICATIFS
+========================================================
+*/
+
+const prefixes = {
+
+  BF: "+226",
+
+  BJ: "+229",
+
+  CI: "+225"
+
+};
+
+
+/*
+========================================================
+ELEMENTS
+========================================================
+*/
+
+const form =
+  document.getElementById("loginForm");
+
+const country =
+  document.getElementById("country");
+
+const prefix =
+  document.getElementById("prefix");
+
+const phone =
+  document.getElementById("phone");
+
+const password =
+  document.getElementById("password");
+
+const button =
+  document.getElementById("loginButton");
+
+const message =
+  document.getElementById("message");
+
+
+/*
+========================================================
+PAYS
+========================================================
+*/
+
+country.addEventListener(
+  "change",
+  function () {
+
+    prefix.value =
+      prefixes[country.value] || "+226";
+
+  }
+);
+
+
+/*
+========================================================
+MESSAGE
+========================================================
+*/
+
+function showMessage(text, type) {
+
+  message.textContent = text;
+
+  message.className =
+    type || "";
+
+}
+
+
+/*
+========================================================
+CONNEXION
+========================================================
+*/
+
+form.addEventListener(
+  "submit",
+  async function (event) {
+
+    event.preventDefault();
+
+
+    showMessage("");
+
+
+    const dialCode =
+      prefixes[country.value];
+
+    const phoneNumber =
+      phone.value.trim();
+
+    const passwordValue =
+      password.value;
+
+
+    /*
+    -----------------------------------------------
+    VALIDATION
+    -----------------------------------------------
+    */
+
+    if (!dialCode) {
+
+      showMessage(
+        "Veuillez sélectionner votre pays.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if (
+      !/^[0-9]+$/.test(phoneNumber)
+    ) {
+
+      showMessage(
+        "Numéro de téléphone invalide.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if (!passwordValue) {
+
+      showMessage(
+        "Veuillez saisir votre mot de passe.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    /*
+    -----------------------------------------------
+    BOUTON
+    -----------------------------------------------
+    */
+
+    button.disabled = true;
+
+    button.textContent =
+      "Connexion…";
+
+
+    try {
+
+      /*
+      ==================================================
+      APPEL DE LA FONCTION EXISTANTE :
+
+      public.login_user(
+        p_dial_code,
+        p_phone_number,
+        p_password
+      )
+      ==================================================
+      */
+
+      const response =
+        await fetch(
+
+          SUPABASE_URL +
+          "/rest/v1/rpc/login_user",
+
+          {
+
+            method: "POST",
+
+            headers: {
+
+              "Content-Type":
+                "application/json",
+
+              "apikey":
+                SUPABASE_ANON_KEY,
+
+              "Authorization":
+                "Bearer " +
+                SUPABASE_ANON_KEY,
+
+              "Accept":
+                "application/json"
+
+            },
+
+            body:
+              JSON.stringify({
+
+                p_dial_code:
+                  dialCode,
+
+                p_phone_number:
+                  phoneNumber,
+
+                p_password:
+                  passwordValue
+
+              })
+
+          }
+
+        );
+
+
+      /*
+      -----------------------------------------------
+      REPONSE
+      -----------------------------------------------
+      */
+
+      const raw =
+        await response.text();
+
+
+      let data = null;
+
+
+      try {
+
+        data =
+          raw
+            ? JSON.parse(raw)
+            : null;
+
+      } catch {
+
+        data = null;
+
+      }
+
+
+      /*
+      -----------------------------------------------
+      ERREUR
+      -----------------------------------------------
+      */
+
+      if (!response.ok) {
+
+        console.error(
+          "login_user:",
+          raw
+        );
+
+
+        let error =
+          "Impossible de se connecter.";
+
+
+        if (
+          data &&
+          typeof data === "object"
+        ) {
+
+          error =
+            data.message ||
+            data.details ||
+            data.hint ||
+            error;
+
+        }
+
+
+        throw new Error(error);
+
+      }
+
+
+      /*
+      -----------------------------------------------
+      RESULTAT
+      -----------------------------------------------
+      */
+
+      const user =
+        Array.isArray(data)
+          ? data[0]
+          : data;
+
+
+      if (!user) {
+
+        throw new Error(
+          "Numéro de téléphone ou mot de passe incorrect."
+        );
+
+      }
+
+
+      /*
+      -----------------------------------------------
+      COMPTE DESACTIVE
+      -----------------------------------------------
+      */
+
+      if (
+        user.is_active === false
+      ) {
+
+        throw new Error(
+          "Votre compte est désactivé."
+        );
+
+      }
+
+
+      /*
+      ==================================================
+      SESSION
+
+      AUCUN MOT DE PASSE N'EST STOCKÉ.
+      ==================================================
+      */
+
+      localStorage.setItem(
+
+        "exonpay_user",
+
+        JSON.stringify({
+
+          user_id:
+            user.user_id,
+
+          professional_id:
+            user.professional_id,
+
+          country_id:
+            user.country_id,
+
+          country_name:
+            user.country_name,
+
+          dial_code:
+            user.dial_code ||
+            dialCode,
+
+          phone_number:
+            user.phone_number ||
+            phoneNumber,
+
+          is_active:
+            user.is_active,
+
+          logged_at:
+            new Date().toISOString()
+
+        })
+
+      );
+
+
+      /*
+      -----------------------------------------------
+      SUCCÈS
+      -----------------------------------------------
+      */
+
+      showMessage(
+        "Connexion réussie.",
+        "success"
+      );
+
+
+      /*
+      -----------------------------------------------
+      DASHBOARD
+      -----------------------------------------------
+      */
+
+      setTimeout(
+        function () {
+
+          window.location.replace(
+            "dashboard.html"
+          );
+
+        },
+        700
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        "Erreur connexion:",
+        error
+      );
+
+
+      showMessage(
+        error.message ||
+        "Impossible de se connecter.",
+        "error"
+      );
+
+
+      button.disabled = false;
+
+      button.textContent =
+        "Se connecter";
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
