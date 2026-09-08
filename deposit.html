@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>EXONPAY - Dépôt</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+}
+
+body{
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:#f4f5f7;
+    color:#111827;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    position:relative;
+    overflow:hidden;
+
+    background:#111827;
+    color:white;
+
+    padding:16px;
+}
+
+.header-bg{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+
+    opacity:.045;
+    pointer-events:none;
+}
+
+.header-bg img{
+    width:90px;
+    height:90px;
+    object-fit:contain;
+}
+
+.header-content{
+    position:relative;
+    z-index:2;
+
+    max-width:650px;
+    margin:auto;
+}
+
+.top{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.back{
+    width:40px;
+    height:40px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:11px;
+
+    color:white;
+    background:rgba(255,255,255,.06);
+
+    text-decoration:none;
+
+    font-size:25px;
+}
+
+.logo{
+    width:37px;
+    height:37px;
+    object-fit:contain;
+}
+
+.brand{
+    font-weight:800;
+    font-size:17px;
+}
+
+.title{
+    margin-top:18px;
+
+    font-size:24px;
+    font-weight:800;
+}
+
+.subtitle{
+    margin-top:5px;
+
+    font-size:12px;
+    color:rgba(255,255,255,.65);
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.container{
+    max-width:650px;
+    margin:auto;
+
+    padding:16px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+    background:white;
+
+    border:1px solid #e1e5e9;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0,0,0,.04);
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-section{
+    display:block;
+}
+
+label{
+    display:block;
+
+    margin-bottom:8px;
+
+    font-size:12px;
+    font-weight:800;
+
+    color:#374151;
+}
+
+.input-wrapper{
+    display:flex;
+    align-items:center;
+
+    border:1px solid #d9dee4;
+
+    border-radius:12px;
+
+    background:white;
+
+    overflow:hidden;
+}
+
+.currency{
+    padding-left:14px;
+
+    color:#6b7280;
+
+    font-size:13px;
+    font-weight:700;
+}
+
+input{
+    width:100%;
+
+    height:52px;
+
+    border:0;
+    outline:0;
+
+    padding:
+        0
+        14px;
+
+    font-size:16px;
+
+    background:transparent;
+}
+
+input:focus{
+    box-shadow:
+        inset 0 0 0 1px #111827;
+}
+
+.info{
+    margin-top:9px;
+
+    font-size:11px;
+
+    color:#6b7280;
+
+    line-height:1.5;
+}
+
+
+/* =========================
+   MAIN BUTTON
+========================= */
+
+button{
+    width:100%;
+
+    height:53px;
+
+    margin-top:20px;
+
+    border:0;
+
+    border-radius:12px;
+
+    background:#111827;
+
+    color:white;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    cursor:pointer;
+}
+
+button:disabled{
+    opacity:.5;
+
+    cursor:not-allowed;
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.error{
+    display:none;
+
+    margin-top:14px;
+
+    padding:13px;
+
+    border:
+        1px solid
+        #fecaca;
+
+    border-radius:11px;
+
+    background:#fef2f2;
+
+    color:#b91c1c;
+
+    font-size:12px;
+
+    line-height:1.5;
+}
+
+
+/* =========================
+   PAYMENT AREA
+========================= */
+
+.payment-section{
+    display:none;
+}
+
+
+/* =========================
+   PAYMENT TITLE
+========================= */
+
+.payment-title{
+    font-size:20px;
+    font-weight:900;
+
+    color:#111827;
+
+    margin-bottom:8px;
+}
+
+.payment-subtitle{
+    font-size:13px;
+
+    color:#6b7280;
+
+    line-height:1.5;
+
+    margin-bottom:18px;
+}
+
+
+/* =========================
+   PAYMENT INFO
+========================= */
+
+.payment-box{
+    background:#f8fafc;
+
+    border-radius:14px;
+
+    padding:16px;
+
+    margin-top:12px;
+}
+
+.payment-row{
+    margin-bottom:17px;
+}
+
+.payment-row:last-child{
+    margin-bottom:0;
+}
+
+.payment-label{
+    display:block;
+
+    font-size:11px;
+
+    color:#6b7280;
+
+    margin-bottom:5px;
+}
+
+.payment-value{
+    font-size:17px;
+
+    font-weight:900;
+
+    color:#d47a00;
+
+    word-break:break-word;
+}
+
+.amount-value{
+    font-size:23px;
+}
+
+
+/* =========================
+   USSD CODE
+========================= */
+
+.ussd-box{
+    margin-top:16px;
+
+    padding:15px;
+
+    background:#fff7ed;
+
+    border:1px solid #fed7aa;
+
+    border-radius:13px;
+
+    text-align:center;
+}
+
+.ussd-label{
+    font-size:11px;
+
+    color:#6b7280;
+
+    margin-bottom:8px;
+}
+
+.ussd-code{
+    font-size:18px;
+
+    font-weight:900;
+
+    color:#c96f00;
+
+    word-break:break-all;
+
+    line-height:1.5;
+}
+
+
+/* =========================
+   COPY BUTTON
+========================= */
+
+.copy-button{
+    height:42px;
+
+    margin-top:12px;
+
+    background:#f3f4f6;
+
+    color:#374151;
+
+    border:1px solid #e5e7eb;
+
+    font-size:13px;
+}
+
+.copy-button:hover{
+    background:#e5e7eb;
+}
+
+
+/* =========================
+   PAYMENT BUTTON
+========================= */
+
+.pay-button{
+    background:#111827;
+
+    font-size:15px;
+
+    height:55px;
+
+    border-radius:13px;
+}
+
+.pay-button:hover{
+    opacity:.92;
+}
+
+
+/* =========================
+   VERIFY BUTTON
+========================= */
+
+.verify-button{
+    margin-top:10px;
+
+    background:white;
+
+    color:#111827;
+
+    border:1px solid #d1d5db;
+
+    font-size:13px;
+}
+
+.verify-button:hover{
+    background:#f9fafb;
+}
+
+
+/* =========================
+   PENDING
+========================= */
+
+.pending-banner{
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:13px;
+
+    background:#fff7ed;
+
+    border:1px solid #fed7aa;
+
+    border-radius:12px;
+
+    margin-bottom:18px;
+}
+
+.pending-icon{
+    width:34px;
+    height:34px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#ffedd5;
+
+    font-size:18px;
+}
+
+.pending-text{
+    flex:1;
+}
+
+.pending-title{
+    font-size:13px;
+
+    font-weight:900;
+
+    color:#c2410c;
+}
+
+.pending-description{
+    margin-top:3px;
+
+    font-size:11px;
+
+    color:#9a3412;
+
+    line-height:1.4;
+}
+
+
+/* =========================
+   TRANSACTION
+========================= */
+
+.transaction{
+    display:none;
+
+    margin-top:15px;
+
+    padding:15px;
+
+    background:#f8fafc;
+
+    border-radius:12px;
+
+    text-align:center;
+}
+
+.transaction-label{
+    font-size:10px;
+
+    color:#6b7280;
+
+    text-transform:uppercase;
+
+    font-weight:800;
+}
+
+.transaction-id{
+    margin-top:7px;
+
+    font-size:15px;
+
+    font-weight:900;
+
+    word-break:break-all;
+}
+
+
+/* =========================
+   SUCCESS
+========================= */
+
+.success{
+    display:none;
+
+    margin-bottom:15px;
+
+    padding:13px;
+
+    border:1px solid #bbf7d0;
+
+    border-radius:11px;
+
+    background:#f0fdf4;
+
+    color:#15803d;
+
+    font-size:12px;
+
+    line-height:1.5;
+
+    text-align:center;
+}
+
+
+/* =========================
+   SMALL SCREEN
+========================= */
+
+@media(max-width:380px){
+
+    .container{
+        padding:12px 10px;
+    }
+
+    .card{
+        padding:16px;
+    }
+
+    .ussd-code{
+        font-size:16px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="header">
+
+    <div class="header-bg">
+
+        <img src="logo.png" alt="">
+        <img src="logo.png" alt="">
+        <img src="logo.png" alt="">
+
+    </div>
+
+
+    <div class="header-content">
+
+        <div class="top">
+
+            <a
+                href="dashboard.html"
+                class="back"
+            >
+                ‹
+            </a>
+
+            <img
+                src="logo.png"
+                class="logo"
+                alt="EXONPAY"
+            >
+
+            <div class="brand">
+                EXONPAY
+            </div>
+
+        </div>
+
+
+        <div class="title">
+            Dépôt
+        </div>
+
+
+        <div class="subtitle">
+            Rechargez votre compte EXONPAY.
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     CONTENT
+========================= -->
+
+<main class="container">
+
+    <section class="card">
+
+
+        <!-- =====================
+             FORMULAIRE
+        ====================== -->
+
+        <div
+            id="formSection"
+            class="form-section"
+        >
+
+            <label for="amount">
+                Montant du dépôt
+            </label>
+
+
+            <div class="input-wrapper">
+
+                <span class="currency">
+                    XOF
+                </span>
+
+                <input
+                    id="amount"
+                    type="number"
+                    inputmode="numeric"
+                    min="3000"
+                    step="1"
+                    placeholder="Ex. 5000"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="info">
+                Montant minimum : 3 000 XOF.
+            </div>
+
+
+            <button
+                id="depositButton"
+                type="button"
+            >
+                Créer le dépôt
+            </button>
+
+        </div>
+
+
+
+        <!-- =====================
+             ERROR
+        ====================== -->
+
+        <div
+            id="error"
+            class="error"
+        ></div>
+
+
+
+        <!-- =====================
+             SUCCESS
+        ====================== -->
+
+        <div
+            id="success"
+            class="success"
+        ></div>
+
+
+
+        <!-- =====================
+             PAIEMENT
+        ====================== -->
+
+        <div
+            id="paymentSection"
+            class="payment-section"
+        >
+
+
+            <div
+                id="pendingBanner"
+                class="pending-banner"
+            >
+
+                <div class="pending-icon">
+                    ⏳
+                </div>
+
+                <div class="pending-text">
+
+                    <div class="pending-title">
+                        Dépôt en attente
+                    </div>
+
+                    <div class="pending-description">
+                        Effectuez le paiement ci-dessous.
+                        Votre compte sera crédité après validation.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="payment-title">
+                Effectuez votre paiement
+            </div>
+
+
+            <div class="payment-subtitle">
+                Composez le code ci-dessous avec votre téléphone
+                Orange Money pour effectuer le dépôt.
+            </div>
+
+
+
+            <!-- =====================
+                 INFORMATIONS
+            ====================== -->
+
+            <div class="payment-box">
+
+
+                <div class="payment-row">
+
+                    <span class="payment-label">
+                        Montant total payable
+                    </span>
+
+                    <div
+                        id="paymentAmount"
+                        class="payment-value amount-value"
+                    >
+                        XOF 0
+                    </div>
+
+                </div>
+
+
+
+                <div class="payment-row">
+
+                    <span class="payment-label">
+                        Orange Money
+                    </span>
+
+                    <div class="payment-value">
+                        05768266
+                    </div>
+
+                </div>
+
+
+
+                <div class="payment-row">
+
+                    <span class="payment-label">
+                        Nom du compte
+                    </span>
+
+                    <div class="payment-value">
+                        Wendpouyre Aubin
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =====================
+                 CODE USSD
+            ====================== -->
+
+            <div class="ussd-box">
+
+                <div class="ussd-label">
+                    Code de paiement
+                </div>
+
+
+                <div
+                    id="ussdCode"
+                    class="ussd-code"
+                >
+                    *144*2*1*05768266*0#
+                </div>
+
+
+                <button
+                    id="copyButton"
+                    class="copy-button"
+                    type="button"
+                >
+                    Copier le code
+                </button>
+
+            </div>
+
+
+
+            <!-- =====================
+                 ALLER AU PAIEMENT
+            ====================== -->
+
+            <button
+                id="payButton"
+                class="pay-button"
+                type="button"
+            >
+                Aller au paiement
+            </button>
+
+
+
+            <!-- =====================
+                 VERIFIER
+            ====================== -->
+
+            <button
+                id="verifyButton"
+                class="verify-button"
+                type="button"
+            >
+                Vérifier le paiement
+            </button>
+
+
+
+            <!-- =====================
+                 TRANSACTION
+            ====================== -->
+
+            <div
+                id="transaction"
+                class="transaction"
+            >
+
+                <div class="transaction-label">
+                    Référence du dépôt
+                </div>
+
+                <div
+                    id="transactionId"
+                    class="transaction-id"
+                ></div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   CONFIGURATION SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://euyvppbbhjrjcbgmdian.supabase.co";
+
+
+const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmJiaGpyamNiZ21kaWFuIiwicmVmIjoiZXV5dnBiaGJocmpqY2JnbWRpYW4iLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc4ODEyMjE2NiwiZXhwIjoyMTAzNjk4MTY2fQ.BOH9ZGx5I34wzIkl8oGU7_BZ8yN3zWZSqIrBceb6aH0";
+
+
+/* =========================================================
+   CONFIGURATION DEPOT
+========================================================= */
+
+const MINIMUM_DEPOSIT = 3000;
+
+
+/*
+   Numéro Orange Money destinataire.
+*/
+
+const PAYMENT_PHONE = "05768266";
+
+
+/*
+   Nom affiché.
+*/
+
+const PAYMENT_NAME = "Wendpouyre Aubin";
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const amountInput =
+    document.getElementById("amount");
+
+const depositButton =
+    document.getElementById("depositButton");
+
+const errorBox =
+    document.getElementById("error");
+
+const successBox =
+    document.getElementById("success");
+
+const formSection =
+    document.getElementById("formSection");
+
+const paymentSection =
+    document.getElementById("paymentSection");
+
+const paymentAmount =
+    document.getElementById("paymentAmount");
+
+const ussdCode =
+    document.getElementById("ussdCode");
+
+const payButton =
+    document.getElementById("payButton");
+
+const copyButton =
+    document.getElementById("copyButton");
+
+const verifyButton =
+    document.getElementById("verifyButton");
+
+const transactionBox =
+    document.getElementById("transaction");
+
+const transactionId =
+    document.getElementById("transactionId");
+
+
+/* =========================================================
+   SESSION UTILISATEUR
+========================================================= */
+
+const savedUser =
+    localStorage.getItem("exonpay_user");
+
+
+if(!savedUser){
+
+    window.location.replace("login.html");
+
+}
+
+
+let sessionUser = null;
+
+
+try{
+
+    sessionUser =
+        JSON.parse(savedUser);
+
+}catch(error){
+
+    localStorage.removeItem("exonpay_user");
+
+    window.location.replace("login.html");
+
+}
+
+
+const USER_ID =
+    sessionUser &&
+    sessionUser.user_id
+        ? sessionUser.user_id
+        : null;
+
+
+if(!USER_ID){
+
+    localStorage.removeItem("exonpay_user");
+
+    window.location.replace("login.html");
+
+}
+
+
+/* =========================================================
+   ERREUR
+========================================================= */
+
+function showError(message){
+
+    errorBox.textContent = message;
+
+    errorBox.style.display = "block";
+
+}
+
+
+function hideError(){
+
+    errorBox.textContent = "";
+
+    errorBox.style.display = "none";
+
+}
+
+
+/* =========================================================
+   FORMAT MONTANT
+========================================================= */
+
+function formatAmount(amount){
+
+    return Number(amount).toLocaleString(
+        "fr-FR"
+    ) + " XOF";
+
+}
+
+
+/* =========================================================
+   CREER LE CODE USSD
+========================================================= */
+
+function generateUSSD(amount){
+
+    return (
+        "*144*2*1*" +
+        PAYMENT_PHONE +
+        "*" +
+        Number(amount) +
+        "#"
+    );
+
+}
+
+
+/* =========================================================
+   AFFICHER LE PAIEMENT
+========================================================= */
+
+function showPayment(deposit){
+
+    if(!deposit){
+        return;
+    }
+
+
+    const amount =
+        Number(deposit.amount);
+
+
+    paymentAmount.textContent =
+        formatAmount(amount);
+
+
+    ussdCode.textContent =
+        generateUSSD(amount);
+
+
+    formSection.style.display =
+        "none";
+
+
+    paymentSection.style.display =
+        "block";
+
+
+    errorBox.style.display =
+        "none";
+
+
+    if(
+        deposit.professional_transaction_id
+    ){
+
+        transactionId.textContent =
+            deposit.professional_transaction_id;
+
+        transactionBox.style.display =
+            "block";
+
+    }else if(
+        deposit.id
+    ){
+
+        transactionId.textContent =
+            deposit.id;
+
+        transactionBox.style.display =
+            "block";
+
+    }
+
+}
+
+
+/* =========================================================
+   RECHERCHE D'UN DEPOT EN ATTENTE
+========================================================= */
+
+async function getPendingDeposit(){
+
+    /*
+       On cherche le dernier dépôt
+       de l'utilisateur ayant le statut pending.
+    */
+
+    const url =
+        SUPABASE_URL +
+        "/rest/v1/deposit_requests" +
+        "?user_id=eq." +
+        encodeURIComponent(USER_ID) +
+        "&status=eq.pending" +
+        "&order=created_at.desc" +
+        "&limit=1";
+
+
+    const response =
+        await fetch(
+            url,
+            {
+
+                method:"GET",
+
+                headers:{
+
+                    "apikey":
+                        SUPABASE_ANON_KEY,
+
+                    "Authorization":
+                        "Bearer " +
+                        SUPABASE_ANON_KEY,
+
+                    "Accept":
+                        "application/json"
+
+                }
+
+            }
+        );
+
+
+    const raw =
+        await response.text();
+
+
+    let data = [];
+
+
+    try{
+
+        data =
+            raw
+                ? JSON.parse(raw)
+                : [];
+
+    }catch(error){
+
+        data = [];
+
+    }
+
+
+    if(!response.ok){
+
+        console.error(
+            "getPendingDeposit:",
+            response.status,
+            raw
+        );
+
+        /*
+           Si la lecture directe est refusée
+           par RLS, on ne bloque pas la page.
+        */
+
+        return null;
+
+    }
+
+
+    if(
+        Array.isArray(data) &&
+        data.length > 0
+    ){
+
+        return data[0];
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =========================================================
+   CREATION DU DEPOT
+========================================================= */
+
+async function createDeposit(amount){
+
+    const response =
+        await fetch(
+
+            SUPABASE_URL +
+            "/rest/v1/rpc/create_deposit",
+
+            {
+
+                method:"POST",
+
+                headers:{
+
+                    "Content-Type":
+                        "application/json",
+
+                    "apikey":
+                        SUPABASE_ANON_KEY,
+
+                    "Authorization":
+    "Bearer " +
+    SUPABASE_ANON_KEY,
+
+"Accept":
+    "application/json"
+
+},
+
+body:
+    JSON.stringify({
+
+        p_user_id:
+            USER_ID,
+
+        p_amount:
+            amount,
+
+        p_payment_method:
+            "orange_money",
+
+        p_payment_reference:
+            null
+
+    })
+
+}
+
+);
+
+
+const raw =
+    await response.text();
+
+
+let data = null;
+
+
+try{
+
+    data =
+        raw
+            ? JSON.parse(raw)
+            : null;
+
+}catch(error){
+
+    data = null;
+
+}
+
+
+/* =========================
+   ERREUR SUPABASE
+========================= */
+
+if(!response.ok){
+
+    console.error(
+        "create_deposit:",
+        response.status,
+        raw
+    );
+
+
+    let message =
+        "Impossible de créer le dépôt.";
+
+
+    if(
+        data &&
+        typeof data === "object"
+    ){
+
+        message =
+            data.message ||
+            data.details ||
+            data.hint ||
+            message;
+
+    }
+
+
+    throw new Error(
+        message
+    );
+
+}
+
+
+/* =========================
+   RESULTAT
+========================= */
+
+if(
+    Array.isArray(data)
+){
+
+    return data[0] || null;
+
+}
+
+
+return data;
+
+}
+
+
+/* =========================================================
+   CHARGER LE DEPOT EN ATTENTE
+========================================================= */
+
+async function loadPendingDeposit(){
+
+    try{
+
+        const pending =
+            await getPendingDeposit();
+
+
+        if(pending){
+
+            showPayment(pending);
+
+            successBox.textContent =
+                "Vous avez déjà un dépôt en attente. Effectuez le paiement ci-dessous.";
+
+            successBox.style.display =
+                "block";
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "Erreur dépôt en attente:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   BOUTON CREER LE DEPOT
+========================================================= */
+
+depositButton.addEventListener(
+    "click",
+    async function(){
+
+        hideError();
+
+
+        const amount =
+            Number(
+                amountInput.value
+            );
+
+
+        /* =========================
+           VALIDATION
+        ========================= */
+
+        if(
+            !Number.isFinite(amount)
+        ){
+
+            showError(
+                "Veuillez saisir un montant valide."
+            );
+
+            amountInput.focus();
+
+            return;
+
+        }
+
+
+        if(
+            amount <= 0
+        ){
+
+            showError(
+                "Le montant doit être supérieur à zéro."
+            );
+
+            amountInput.focus();
+
+            return;
+
+        }
+
+
+        if(
+            amount < MINIMUM_DEPOSIT
+        ){
+
+            showError(
+                "Le dépôt minimum est de " +
+                MINIMUM_DEPOSIT.toLocaleString(
+                    "fr-FR"
+                ) +
+                " XOF."
+            );
+
+            amountInput.focus();
+
+            return;
+
+        }
+
+
+        depositButton.disabled =
+            true;
+
+        depositButton.textContent =
+            "Création du dépôt...";
+
+
+        try{
+
+            /* =========================
+               VERIFIER DEPOT EXISTANT
+            ========================= */
+
+            const existing =
+                await getPendingDeposit();
+
+
+            if(existing){
+
+                showPayment(existing);
+
+                successBox.textContent =
+                    "Vous avez déjà un dépôt en attente.";
+
+                successBox.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            /* =========================
+               CREER LE DEPOT
+            ========================= */
+
+            const deposit =
+                await createDeposit(
+                    amount
+                );
+
+
+            if(!deposit){
+
+                throw new Error(
+                    "La base n'a retourné aucune demande de dépôt."
+                );
+
+            }
+
+
+            console.log(
+                "Dépôt créé:",
+                deposit
+            );
+
+
+            /* =========================
+               AFFICHER LE PAIEMENT
+            ========================= */
+
+            showPayment(
+                deposit
+            );
+
+
+            successBox.textContent =
+                "Votre dépôt a été créé. Effectuez maintenant le paiement Orange Money.";
+
+            successBox.style.display =
+                "block";
+
+
+        }catch(error){
+
+            console.error(
+                "Dépôt:",
+                error
+            );
+
+
+            let message =
+                error.message ||
+                "Impossible de créer le dépôt.";
+
+
+            const lower =
+                message.toLowerCase();
+
+
+            if(
+                lower.includes("minimum")
+            ){
+
+                message =
+                    "Le dépôt minimum est de 3 000 XOF.";
+
+            }
+
+
+            if(
+                lower.includes("pending") ||
+                lower.includes("en attente") ||
+                lower.includes("déjà")
+            ){
+
+                message =
+                    "Vous avez déjà un dépôt en attente. Veuillez terminer celui-ci avant d'en créer un autre.";
+
+            }
+
+
+            showError(
+                message
+            );
+
+
+            depositButton.disabled =
+                false;
+
+            depositButton.textContent =
+                "Créer le dépôt";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   BOUTON ALLER AU PAIEMENT
+========================================================= */
+
+payButton.addEventListener(
+    "click",
+    function(){
+
+        const code =
+            ussdCode.textContent.trim();
+
+
+        const dialCode =
+            code.replace(
+                /#/g,
+                "%23"
+            );
+
+
+        window.location.href =
+            "tel:" +
+            dialCode;
+
+    }
+);
+
+
+/* =========================================================
+   COPIER LE CODE
+========================================================= */
+
+copyButton.addEventListener(
+    "click",
+    async function(){
+
+        const code =
+            ussdCode.textContent.trim();
+
+
+        try{
+
+            await navigator.clipboard.writeText(
+                code
+            );
+
+
+            copyButton.textContent =
+                "Code copié ✓";
+
+
+            setTimeout(
+                function(){
+
+                    copyButton.textContent =
+                        "Copier le code";
+
+                },
+                2000
+            );
+
+
+        }catch(error){
+
+            const textarea =
+                document.createElement(
+                    "textarea"
+                );
+
+            textarea.value =
+                code;
+
+            document.body.appendChild(
+                textarea
+            );
+
+            textarea.select();
+
+            document.execCommand(
+                "copy"
+            );
+
+            textarea.remove();
+
+
+            copyButton.textContent =
+                "Code copié ✓";
+
+
+            setTimeout(
+                function(){
+
+                    copyButton.textContent =
+                        "Copier le code";
+
+                },
+                2000
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   VERIFIER LE PAIEMENT
+========================================================= */
+
+verifyButton.addEventListener(
+    "click",
+    async function(){
+
+        hideError();
+
+
+        verifyButton.disabled =
+            true;
+
+        verifyButton.textContent =
+            "Vérification...";
+
+
+        try{
+
+            const pending =
+                await getPendingDeposit();
+
+
+            if(!pending){
+
+                successBox.textContent =
+                    "Le statut de votre dépôt a changé. Consultez votre solde ou votre historique.";
+
+                successBox.style.display =
+                    "block";
+
+
+                verifyButton.textContent =
+                    "Vérification terminée";
+
+                return;
+
+            }
+
+
+            successBox.textContent =
+                "Votre dépôt est toujours en attente de validation. Si vous avez déjà effectué le paiement, veuillez patienter.";
+
+            successBox.style.display =
+                "block";
+
+
+        }catch(error){
+
+            console.error(
+                "Vérification:",
+                error
+            );
+
+
+            showError(
+                "Impossible de vérifier le statut du dépôt pour le moment."
+            );
+
+        }finally{
+
+            verifyButton.disabled =
+                false;
+
+            verifyButton.textContent =
+                "Vérifier le paiement";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   TOUCHE ENTER
+========================================================= */
+
+amountInput.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Enter"
+        ){
+
+            depositButton.click();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CHARGEMENT INITIAL
+========================================================= */
+
+loadPendingDeposit();
+
+</script>
+
+</body>
+
+</html>
