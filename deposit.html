@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EXONPAY - Dépôt</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f6f8;
+    color:#111827;
+}
+
+.header{
+    background:#111827;
+    color:white;
+    padding:20px;
+}
+
+.header-inner{
+    max-width:500px;
+    margin:auto;
+}
+
+.header-title{
+    font-size:20px;
+    font-weight:800;
+}
+
+.container{
+    width:100%;
+    max-width:500px;
+    margin:auto;
+    padding:25px 18px 40px;
+}
+
+.progress{
+    display:flex;
+    align-items:center;
+    margin-bottom:28px;
+}
+
+.circle{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#e5e7eb;
+    color:#6b7280;
+    font-weight:800;
+}
+
+.circle.active{
+    background:#111827;
+    color:white;
+}
+
+.progress-line{
+    flex:1;
+    height:2px;
+    background:#e5e7eb;
+}
+
+.title{
+    margin:0;
+    font-size:25px;
+    font-weight:800;
+}
+
+.subtitle{
+    margin:9px 0 25px;
+    color:#6b7280;
+    font-size:14px;
+    line-height:1.5;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
+
+.field{
+    margin-bottom:19px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-size:14px;
+    font-weight:700;
+}
+
+input,
+select{
+    width:100%;
+    height:51px;
+    border:1px solid #d1d5db;
+    border-radius:11px;
+    padding:0 14px;
+    background:white;
+    font-size:16px;
+    outline:none;
+}
+
+input:focus,
+select:focus{
+    border-color:#111827;
+    box-shadow:0 0 0 3px rgba(17,24,39,.08);
+}
+
+button{
+    width:100%;
+    height:51px;
+    border:0;
+    border-radius:11px;
+    background:#111827;
+    color:white;
+    font-size:16px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+button:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.back-button{
+    margin-top:10px;
+    background:#eef0f3;
+    color:#111827;
+}
+
+.message{
+    display:none;
+    margin-bottom:17px;
+    padding:13px;
+    border-radius:10px;
+    font-size:14px;
+    line-height:1.45;
+    font-weight:600;
+}
+
+.message.error{
+    display:block;
+    background:#fff1f2;
+    color:#be123c;
+}
+
+.message.success{
+    display:block;
+    background:#ecfdf5;
+    color:#047857;
+}
+
+.summary{
+    background:#f8fafc;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:20px;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    padding:8px 0;
+    font-size:14px;
+}
+
+.summary-label{
+    color:#6b7280;
+}
+
+.summary-value{
+    text-align:right;
+    font-weight:800;
+}
+
+.loading{
+    display:none;
+    margin-top:14px;
+    text-align:center;
+    color:#6b7280;
+    font-size:13px;
+}
+
+.note{
+    margin-top:18px;
+    color:#6b7280;
+    font-size:12px;
+    text-align:center;
+    line-height:1.5;
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="header-inner">
+        <div class="header-title">
+            EXONPAY
+        </div>
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="progress">
+
+        <div
+            id="circle1"
+            class="circle active"
+        >
+            1
+        </div>
+
+        <div class="progress-line"></div>
+
+        <div
+            id="circle2"
+            class="circle"
+        >
+            2
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         ÉTAPE 1
+         ========================================== -->
+
+    <section
+        id="step1"
+        class="step"
+    >
+
+        <h1 class="title">
+            Effectuer un dépôt
+        </h1>
+
+        <p class="subtitle">
+            Sélectionnez le montant et le pays
+            utilisé pour votre paiement.
+        </p>
+
+
+        <div
+            id="message1"
+            class="message"
+        ></div>
+
+
+        <div class="card">
+
+            <div class="field">
+
+                <label for="amount">
+                    Montant du dépôt
+                </label>
+
+                <input
+                    id="amount"
+                    type="number"
+                    min="1"
+                    step="1"
+                    inputmode="numeric"
+                    placeholder="Ex : 5000"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="country">
+                    Pays
+                </label>
+
+                <select id="country">
+
+                    <option value="">
+                        Sélectionner un pays
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button id="nextButton">
+                Suivant
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================================
+         ÉTAPE 2
+         ========================================== -->
+
+    <section
+        id="step2"
+        class="step"
+        style="display:none;"
+    >
+
+        <h1 class="title">
+            Paiement
+        </h1>
+
+        <p class="subtitle">
+            Saisissez le numéro de téléphone qui
+            sera utilisé pour effectuer le paiement.
+        </p>
+
+
+        <div
+            id="message2"
+            class="message"
+        ></div>
+
+
+        <div class="card">
+
+            <div class="summary">
+
+                <div class="summary-row">
+
+                    <span class="summary-label">
+                        Montant
+                    </span>
+
+                    <span
+                        id="summaryAmount"
+                        class="summary-value"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span class="summary-label">
+                        Pays
+                    </span>
+
+                    <span
+                        id="summaryCountry"
+                        class="summary-value"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span class="summary-label">
+                        Configuration
+                    </span>
+
+                    <span
+                        id="summaryApi"
+                        class="summary-value"
+                    >
+                        Automatique
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="payerPhone">
+                    Numéro de téléphone
+                </label>
+
+                <input
+                    id="payerPhone"
+                    type="tel"
+                    inputmode="numeric"
+                    autocomplete="tel"
+                    placeholder="Ex : 70123456"
+                >
+
+            </div>
+
+
+            <button id="payButton">
+                Procéder au paiement
+            </button>
+
+
+            <button
+                id="backButton"
+                class="back-button"
+            >
+                Retour
+            </button>
+
+
+            <div
+                id="loading"
+                class="loading"
+            >
+                Préparation du paiement...
+            </div>
+
+        </div>
+
+
+        <div class="note">
+            La configuration de paiement est déterminée
+            automatiquement selon le pays sélectionné.
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="deposit.js"></script>
+
+</body>
+</html>
