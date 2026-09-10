@@ -253,7 +253,7 @@ function updateUSSD() {
         } else {
 
             code =
-                "*555*2*1*51382699*" +
+                "bientôt disponible" +
                 amount +
                 "#";
         }
