@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>EXONPAY - Paiement</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f6f8;
+            color: #222;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 430px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 30px 22px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .logo {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            margin-bottom: 18px;
+        }
+
+        .icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            margin: 0 auto 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 38px;
+            font-weight: bold;
+        }
+
+        .loading-icon {
+            border: 5px solid #e5e7eb;
+            border-top: 5px solid #111827;
+            animation: spin 1s linear infinite;
+        }
+
+        .success-icon {
+            background: #e8f8ee;
+            color: #16a34a;
+        }
+
+        .error-icon {
+            background: #fdecec;
+            color: #dc2626;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        h1 {
+            font-size: 23px;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 22px;
+        }
+
+        .details {
+            background: #f8f9fb;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #6b7280;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .status-success {
+            color: #16a34a;
+        }
+
+        .status-error {
+            color: #dc2626;
+        }
+
+        .button {
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 22px;
+            background: #111827;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .button:active {
+            transform: scale(0.98);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .small {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #9ca3af;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ÉTAT DE VÉRIFICATION -->
+    <div class="card" id="loadingBox">
+
+        <img
+            src="logo.png"
+            alt="EXONPAY"
+            class="logo"
+        >
+
+        <div class="icon loading-icon"></div>
+
+        <h1>Vérification du paiement</h1>
+
+        <p class="message">
+            Nous vérifions votre paiement auprès de notre
+            prestataire de paiement. Veuillez patienter...
+        </p>
+
+        <p class="small">
+            Ne fermez pas cette page pendant la vérification.
+        </p>
+
+    </div>
+
+
+    <!-- PAIEMENT CONFIRMÉ -->
+    <div class="card hidden" id="successBox">
+
+        <img
+            src="logo.png"
+            alt="EXONPAY"
+            class="logo"
+        >
+
+        <div class="icon success-icon">
+            ✓
+        </div>
+
+        <h1>Paiement confirmé</h1>
+
+        <p class="message">
+            Votre paiement a été vérifié avec succès.
+            Votre solde EXONPAY a été crédité.
+        </p>
+
+        <div class="details">
+
+            <div class="detail-row">
+                <span class="detail-label">
+                    Montant
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="successAmount"
+                >
+                    —
+                </span>
+            </div>
+
+
+            <div class="detail-row">
+                <span class="detail-label">
+                    Transaction EXONPAY
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="successTransaction"
+                >
+                    —
+                </span>
+            </div>
+
+
+            <div class="detail-row">
+                <span class="detail-label">
+                    Référence paiement
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="successReference"
+                >
+                    —
+                </span>
+            </div>
+
+
+            <div class="detail-row">
+                <span class="detail-label">
+                    Statut
+                </span>
+
+                <span
+                    class="detail-value status-success"
+                >
+                    Confirmé
+                </span>
+            </div>
+
+        </div>
+
+
+        <a
+            href="dashboard.html"
+            class="button"
+        >
+            Retour au tableau de bord
+        </a>
+
+    </div>
+
+
+    <!-- PAIEMENT NON CONFIRMÉ -->
+    <div class="card hidden" id="errorBox">
+
+        <img
+            src="logo.png"
+            alt="EXONPAY"
+            class="logo"
+        >
+
+        <div class="icon error-icon">
+            !
+        </div>
+
+        <h1>Paiement non confirmé</h1>
+
+        <p
+            class="message"
+            id="errorMessage"
+        >
+            Nous n'avons pas pu confirmer votre paiement.
+        </p>
+
+        <div class="details">
+
+            <div class="detail-row">
+                <span class="detail-label">
+                    Référence
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="errorReference"
+                >
+                    —
+                </span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">
+                    Statut
+                </span>
+
+                <span class="detail-value status-error">
+                    Non confirmé
+                </span>
+            </div>
+
+        </div>
+
+
+        <a
+            href="dashboard.html"
+            class="button"
+        >
+            Retour au tableau de bord
+        </a>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /*
+     * ============================================
+     * CONFIGURATION EXONPAY
+     * ============================================
+     */
+
+    const SUPABASE_URL =
+        "https://euyvppbbhjrjcbgmdian.supabase.co";
+
+    const VERIFY_FUNCTION =
+        SUPABASE_URL +
+        "/functions/v1/verify-westpay-deposit";
+
+
+    /*
+     * ============================================
+     * ÉLÉMENTS HTML
+     * ============================================
+     */
+
+    const loadingBox =
+        document.getElementById("loadingBox");
+
+    const successBox =
+        document.getElementById("successBox");
+
+    const errorBox =
+        document.getElementById("errorBox");
+
+    const errorMessage =
+        document.getElementById("errorMessage");
+
+    const errorReference =
+        document.getElementById("errorReference");
+
+    const successAmount =
+        document.getElementById("successAmount");
+
+    const successTransaction =
+        document.getElementById("successTransaction");
+
+    const successReference =
+        document.getElementById("successReference");
+
+
+    /*
+     * ============================================
+     * AFFICHER LE RÉSULTAT
+     * ============================================
+     */
+
+    function showSuccess(data) {
+
+        loadingBox.classList.add("hidden");
+
+        errorBox.classList.add("hidden");
+
+        successBox.classList.remove("hidden");
+
+
+        /*
+         * Montant
+         */
+
+        const amount =
+            Number(data.amount || 0);
+
+        successAmount.textContent =
+            amount.toLocaleString("fr-FR") + " XOF";
+
+
+        /*
+         * Transaction EXONPAY
+         */
+
+        successTransaction.textContent =
+            data.professional_transaction_id ||
+            "—";
+
+
+        /*
+         * Référence WestPay
+         */
+
+        successReference.textContent =
+            data.westpay_tx_id ||
+            "—";
+    }
+
+
+    /*
+     * ============================================
+     * AFFICHER L'ERREUR
+     * ============================================
+     */
+
+    function showError(message, reference = "") {
+
+        loadingBox.classList.add("hidden");
+
+        successBox.classList.add("hidden");
+
+        errorBox.classList.remove("hidden");
+
+
+        errorMessage.textContent =
+            message ||
+            "Nous n'avons pas pu confirmer votre paiement.";
+
+
+        errorReference.textContent =
+            reference || "—";
+    }
+
+
+    /*
+     * ============================================
+     * VÉRIFICATION DU PAIEMENT
+     * ============================================
+     */
+
+    async function verifyPayment() {
+
+        try {
+
+            /*
+             * Récupération des paramètres
+             * envoyés par WestPay
+             */
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+
+            const depositId =
+                (
+                    params.get("deposit_id") ||
+                    ""
+                ).trim();
+
+
+            const westpayRef =
+                (
+                    params.get("ref") ||
+                    params.get("reference") ||
+                    ""
+                ).trim();
+
+
+            /*
+             * Ces valeurs peuvent être présentes
+             * dans l'URL mais elles ne servent
+             * PAS de preuve de paiement.
+             */
+
+            const urlStatus =
+                params.get("status");
+
+            const urlAmount =
+                params.get("amount");
+
+
+            /*
+             * Vérification des paramètres
+             * indispensables
+             */
+
+            if (!depositId) {
+
+                showError(
+                    "Identifiant du dépôt manquant."
+                );
+
+                return;
+            }
+
+
+            if (!westpayRef) {
+
+                showError(
+                    "Référence du paiement manquante."
+                );
+
+                return;
+            }
+
+
+            /*
+             * Appel de notre Edge Function.
+             *
+             * C'est elle qui va :
+             *
+             * 1. récupérer le dépôt EXONPAY
+             * 2. récupérer la clé API du pays
+             * 3. se connecter à WestPay
+             * 4. rechercher la transaction
+             * 5. vérifier le montant
+             * 6. vérifier le pays
+             * 7. vérifier le statut
+             * 8. enregistrer la référence
+             * 9. appeler process_deposit()
+             * 10. créditer le portefeuille
+             */
+
+            const response =
+                await fetch(
+                    VERIFY_FUNCTION,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            deposit_id:
+                                depositId,
+
+                            ref:
+                                westpayRef
+                        })
+                    }
+                );
+
+
+            /*
+             * Lecture de la réponse
+             */
+
+            let data = null;
+
+            try {
+
+                data =
+                    await response.json();
+
+            } catch {
+
+                data = null;
+            }
+
+
+            /*
+             * Vérification de la réponse HTTP
+             */
+
+            if (!response.ok) {
+
+                showError(
+
+                    data?.error ||
+                    "Le paiement n'a pas pu être confirmé.",
+
+                    westpayRef
+
+                );
+
+                return;
+            }
+
+
+            /*
+             * Vérification supplémentaire
+             *
+             * On exige que notre Edge Function
+             * confirme réellement le paiement.
+             */
+
+            if (
+                data?.success !== true ||
+                data?.verified !== true
+            ) {
+
+                showError(
+
+                    data?.error ||
+                    "Le paiement WestPay n'est pas confirmé.",
+
+                    westpayRef
+
+                );
+
+                return;
+            }
+
+
+            /*
+             * Vérification du crédit
+             */
+
+            if (data?.credited !== true) {
+
+                showError(
+
+                    data?.error ||
+                    "Le paiement est confirmé mais le crédit n'a pas été effectué.",
+
+                    westpayRef
+
+                );
+
+                return;
+            }
+
+
+            /*
+             * Tout est confirmé.
+             */
+
+            showSuccess(data);
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Erreur vérification paiement:",
+                error
+            );
+
+
+            showError(
+                "Une erreur de connexion est survenue pendant la vérification du paiement."
+            );
+        }
+    }
+
+
+    /*
+     * ============================================
+     * LANCEMENT AUTOMATIQUE
+     * ============================================
+     *
+     * La page est appelée automatiquement
+     * après le paiement WestPay.
+     *
+     * Aucun bouton "Vérifier" n'est nécessaire.
+     */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            verifyPayment();
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
