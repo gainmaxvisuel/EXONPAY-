@@ -683,12 +683,12 @@ nextButton.addEventListener(
         */
 
         if (
-            amount < 3000
+            amount < 2000
         ) {
 
             showMessage(
                 message1,
-                "Le dépôt minimum est de 3000 XOF."
+                "Le dépôt minimum est de 2000 XOF."
             );
 
             return;
